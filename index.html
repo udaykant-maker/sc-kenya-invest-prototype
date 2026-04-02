@@ -350,7 +350,7 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
 .ca-val{font-size:13px;font-weight:700;}
 
 /* BS bar */
-.bs-bar{background:#fff;border-top:1px solid var(--border);padding:12px 16px;display:flex;gap:10px;flex-shrink:0;box-shadow:0 -2px 8px rgba(0,0,0,.04);}
+.bs-bar{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:12px 16px;display:flex;gap:10px;z-index:50;box-shadow:0 -2px 8px rgba(0,0,0,.04);}
 .btn-sell{flex:1;padding:15px;background:#fff;border:2px solid var(--red);border-radius:12px;font-size:15px;font-weight:700;color:var(--red);cursor:pointer;font-family:inherit;}
 .btn-sell:active{background:var(--red-lt);}
 .btn-buy{flex:1;padding:15px;background:var(--sc-teal);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,132,143,.35);}
@@ -672,7 +672,7 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
       <!-- Market toggle NSE / US -->
       <div class="mkt-toggle">
         <button class="mt-btn active" id="mt-nse" onclick="setMkt('NSE',this)">NSE Kenya</button>
-        <button class="mt-btn" id="mt-us" onclick="setMkt('US',this)">🇺🇸 US Equities</button>
+        <button class="mt-btn" id="mt-us" onclick="setMkt('US',this)">US Equities</button>
       </div>
 
       <div class="scroll">
@@ -710,7 +710,7 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
           <button class="fpill" onclick="setFil('Turnover',this)">Turnover</button>
         </div>
         <div id="stock-list" style="background:#fff;border-radius:12px 12px 0 0;overflow:hidden;margin:0 0;border:1px solid var(--border);border-bottom:none;"></div>
-        <div class="pb"></div>
+        <div style="height:32px;"></div>
       </div>
     </div>
 
@@ -742,7 +742,7 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
         <button class="dtab" onclick="dTab('orderbook',this)">Order Book</button>
         <button class="dtab" onclick="dTab('corpactions',this)">Corp. Actions</button>
       </div>
-      <div class="scroll">
+      <div class="scroll" id="d-scroll">
         <!-- Overview -->
         <div id="tab-overview">
           <div class="rbar">
@@ -789,11 +789,12 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
             ${[{t:'Dividend',d:'Ex-Date: 15 Mar 2025 · KES 2.50/share',c:'var(--sc-green)',cv:'KES 2.50'},{t:'AGM Notice',d:'Meeting: 28 Mar 2025 · Annual General Meeting',c:'var(--amber)',cv:'28 Mar'},{t:'Bonus Issue',d:'Record Date: 10 Apr 2025 · 1:5 ratio',c:'var(--sc-teal)',cv:'1:5'}].map(e=>`<div class="ca-item"><div class="ca-dot" style="background:${e.c};"></div><div class="ca-info"><div class="ca-t">${e.t}</div><div class="ca-d">${e.d}</div></div><div class="ca-val" style="color:${e.c};">${e.cv}</div></div>`).join('')}
           </div>
         </div>
+        <div style="height:8px;"></div>
         <div class="you-own">
           <div class="yo-info"><div class="yo-lbl">You Own</div><div class="yo-val" id="yo-val">KES 0.00</div></div>
           <div class="yo-num" id="yo-num">0 shares</div>
         </div>
-        <div class="pb"></div>
+        <div style="height:88px;"></div>
       </div>
       <div class="bs-bar">
         <button class="btn-sell" onclick="openOrder('sell')">Sell</button>
@@ -975,7 +976,7 @@ function buildMovers(mkt){
   document.getElementById('movers-row').innerHTML=top.map(s=>{
     const up=s.chg>=0,ic=IC[ST.indexOf(s)%IC.length],p=s.cur==='USD'?'$':'KES ';
     return `<div class="mv-card" onclick="openDetail('${s.sym}')">
-      <div class="mv-sym">${s.sym}${s.mkt==='US'?'<span class="us-badge">US</span>':''}</div>
+      <div class="mv-sym">${s.sym} <span style="font-size:9px;color:var(--txtgrey);font-weight:400;">${s.mkt}</span></div>
       <div class="mv-name">${s.name}</div>
       <div class="mv-price">${p}${s.price.toFixed(2)}</div>
       <div class="mv-chg ${up?'up':'dn'}">${up?'▲ +':'▼ '}${Math.abs(s.pct).toFixed(2)}%</div>
@@ -1003,7 +1004,7 @@ function srow(s){
   const up=s.chg>=0,c=ic(s.sym),p=px(s);
   return `<div class="srow" onclick="openDetail('${s.sym}')">
     <div class="sico" style="background:${c.bg};color:${c.c}">${s.sym.slice(0,3)}</div>
-    <div class="sinf"><div class="ssym">${s.sym}${s.mkt==='US'?'<span class="us-badge">US</span>':''}</div><div class="snm">${s.name}</div></div>
+    <div class="sinf"><div class="ssym">${s.sym}</div><div class="snm">${s.name}</div></div>
     <div class="spc"><div class="spr">${p}${s.price.toFixed(2)}</div><div class="sch ${up?'up':'dn'}">${up?'▲ +':'▼ '}${Math.abs(s.pct).toFixed(2)}%</div></div>
   </div>`;
 }
