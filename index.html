@@ -903,13 +903,159 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
       </div>
     </div>
 
+
+    <!-- ══════════════════════════ ORDERS ══════════════════════════ -->
+    <div class="screen" id="s-orders">
+      <div class="st"><span class="st-time">9:41</span>
+        <div class="st-icons">
+          <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1A1A1A"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1A1A1A"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1A1A1A"/></svg>
+        </div>
+      </div>
+      <div class="spcr"></div>
+      <div class="abar">
+        <div class="sc-logo-light">
+          <div class="sc-bars-sm"><div class="sc-b" style="width:22px;background:var(--sc-teal);"></div><div class="sc-b" style="width:17px;background:var(--sc-green);"></div><div class="sc-b" style="width:12px;background:var(--sc-cobalt);"></div></div>
+          <div class="sc-words-sm"><div class="sc-w-l1">Standard</div><div class="sc-w-l2">Chartered</div></div>
+        </div>
+        <div style="flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--black);">Orders</div>
+        <button class="bar-ico">🔍</button>
+      </div>
+      <!-- Tabs -->
+      <div style="display:flex;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;">
+        <button class="dtab active" id="ord-tab-pending" onclick="setOrdTab('pending',this)" style="flex:1;padding:11px;text-align:center;font-size:13px;font-weight:600;color:var(--sc-teal);border:none;background:none;font-family:inherit;border-bottom:2px solid var(--sc-teal);cursor:pointer;">Pending Orders</button>
+        <button class="dtab" id="ord-tab-history" onclick="setOrdTab('history',this)" style="flex:1;padding:11px;text-align:center;font-size:13px;font-weight:600;color:var(--midgrey);border:none;background:none;font-family:inherit;border-bottom:2px solid transparent;cursor:pointer;">My Trades</button>
+      </div>
+      <div class="scroll">
+        <!-- Pending Orders -->
+        <div id="ord-pending">
+          <div style="background:#fff;margin:12px 16px;border-radius:12px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow-sm);">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--ltgrey);display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:15px;font-weight:700;color:var(--black);">EQTY</span>
+                  <span style="background:var(--sc-green-lt);color:var(--sc-green);font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;">BUY</span>
+                </div>
+                <div style="font-size:11px;color:var(--txtgrey);margin-top:2px;">06 Feb, 11:13 · 46 shares · KES 1.46/share</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:15px;font-weight:700;color:var(--black);">KES 150.16</div>
+                <button onclick="void(0)" style="margin-top:5px;background:#fff;border:1.5px solid var(--red);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--red);cursor:pointer;font-family:inherit;">× Cancel</button>
+              </div>
+            </div>
+            <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:15px;font-weight:700;color:var(--black);">SCOM</span>
+                  <span style="background:var(--red-lt);color:var(--red);font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;">SELL</span>
+                </div>
+                <div style="font-size:11px;color:var(--txtgrey);margin-top:2px;">06 Feb, 14:22 · 200 shares · KES 18.65/share</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:15px;font-weight:700;color:var(--black);">KES 3,730</div>
+                <button onclick="void(0)" style="margin-top:5px;background:#fff;border:1.5px solid var(--red);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;color:var(--red);cursor:pointer;font-family:inherit;">× Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;padding:8px 16px 4px;font-size:11px;color:var(--midgrey);">Orders execute during NSE trading hours · 9:00 AM – 3:00 PM EAT</div>
+        </div>
+        <!-- Trade History (hidden by default) -->
+        <div id="ord-history" style="display:none;">
+          <div style="background:#fff;margin:12px 16px;border-radius:12px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow-sm);">
+            ${[
+              {sym:'EQTY',action:'BUY',qty:500,price:38.50,total:19250,date:'01 Feb, 10:15',status:'Filled'},
+              {sym:'SCOM',action:'BUY',qty:1000,price:20.10,total:20100,date:'28 Jan, 11:42',status:'Filled'},
+              {sym:'KCB', action:'BUY',qty:200,price:34.00,total:6800,date:'20 Jan, 09:31',status:'Filled'},
+              {sym:'AAPL',action:'BUY',qty:10,price:175.00,total:1750,date:'15 Jan, 16:02',status:'Filled',usd:true},
+              {sym:'EQTY',action:'SELL',qty:100,price:41.20,total:4120,date:'10 Jan, 14:55',status:'Filled'},
+            ].map((t,i) => `
+            <div style="padding:13px 16px;${i>0?'border-top:1px solid var(--ltgrey)':''}display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="display:flex;align-items:center;gap:7px;">
+                  <span style="font-size:14px;font-weight:700;color:var(--black);">${t.sym}${t.usd?'<span style="background:var(--sc-cobalt);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;">US</span>':''}</span>
+                  <span style="background:${t.action==='BUY'?'var(--sc-green-lt)':'var(--red-lt)'};color:${t.action==='BUY'?'var(--sc-green)':'var(--red)'};font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;">${t.action}</span>
+                  <span style="background:var(--ltgrey);color:var(--txtgrey);font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;">${t.status}</span>
+                </div>
+                <div style="font-size:11px;color:var(--txtgrey);margin-top:2px;">${t.date} · ${t.qty} shares · ${t.usd?'$':'KES '}${t.price.toFixed(2)}/share</div>
+              </div>
+              <div style="font-size:14px;font-weight:700;color:var(--black);">${t.usd?'$':'KES '}${t.total.toLocaleString()}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="pb"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════ PROFILE ══════════════════════════ -->
+    <div class="screen" id="s-profile">
+      <div class="st"><span class="st-time">9:41</span></div>
+      <div class="spcr"></div>
+      <div class="abar">
+        <div class="sc-logo-light">
+          <div class="sc-bars-sm"><div class="sc-b" style="width:22px;background:var(--sc-teal);"></div><div class="sc-b" style="width:17px;background:var(--sc-green);"></div><div class="sc-b" style="width:12px;background:var(--sc-cobalt);"></div></div>
+          <div class="sc-words-sm"><div class="sc-w-l1">Standard</div><div class="sc-w-l2">Chartered</div></div>
+        </div>
+        <div style="flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--black);">Profile</div>
+        <button class="bar-ico">⚙️</button>
+      </div>
+      <div class="scroll">
+        <!-- Avatar -->
+        <div style="background:var(--sc-teal);padding:28px 20px 22px;text-align:center;flex-shrink:0;">
+          <div style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.5);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;">SC</div>
+          <div style="font-size:18px;font-weight:700;color:#fff;">Savvy Client</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:3px;">SC Kenya · Premier Banking</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:rgba(255,255,255,.15);border-radius:20px;padding:4px 14px;">
+            <div style="width:7px;height:7px;border-radius:50%;background:#A8FFCE;"></div>
+            <span style="font-size:12px;color:#fff;font-weight:600;">KYC Verified</span>
+          </div>
+        </div>
+        <!-- Stats row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:#fff;border-bottom:1px solid var(--border);">
+          <div style="padding:14px;text-align:center;border-right:1px solid var(--border);">
+            <div style="font-size:16px;font-weight:700;color:var(--sc-teal);">4</div>
+            <div style="font-size:10px;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;">Holdings</div>
+          </div>
+          <div style="padding:14px;text-align:center;border-right:1px solid var(--border);">
+            <div style="font-size:16px;font-weight:700;color:var(--sc-green);">+8.63%</div>
+            <div style="font-size:10px;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;">Returns</div>
+          </div>
+          <div style="padding:14px;text-align:center;">
+            <div style="font-size:16px;font-weight:700;color:var(--black);">7</div>
+            <div style="font-size:10px;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;">Trades</div>
+          </div>
+        </div>
+        <!-- Menu items -->
+        ${[
+          {ico:'💼', label:'Investment Profile', sub:'Risk level · preferences'},
+          {ico:'🔔', label:'Alerts & Notifications', sub:'Price alerts · order updates'},
+          {ico:'📄', label:'Statements & Reports', sub:'Download trade history'},
+          {ico:'🛡️', label:'Security Settings', sub:'PIN · biometric · 2FA'},
+          {ico:'❓', label:'Help & Support', sub:'FAQs · contact SC Kenya'},
+          {ico:'📋', label:'Terms & Conditions', sub:'Legal · CMA disclosures'},
+        ].map(m => `
+        <div style="display:flex;align-items:center;gap:14px;background:#fff;padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;">
+          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">${m.ico}</div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:600;color:var(--black);">${m.label}</div>
+            <div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">${m.sub}</div>
+          </div>
+          <span style="color:var(--midgrey);font-size:20px;">›</span>
+        </div>`).join('')}
+        <!-- Powered by -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:20px;font-size:11px;color:var(--midgrey);">
+          <span style="background:var(--sc-teal);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">V22</span>
+          Powered by Vault22 · v2.1.0
+        </div>
+        <div class="pb"></div>
+      </div>
+    </div>
+
     <!-- BOTTOM NAV -->
     <nav id="bnav">
       <button class="nb active" id="n0" onclick="go('s-trade',0)"><span class="nb-ico">🏠</span><span class="nb-lbl">Home</span><div class="nb-dot"></div></button>
-      <button class="nb" id="n1" onclick="go('s-trade',0)"><span class="nb-ico">📊</span><span class="nb-lbl">Markets</span><div class="nb-dot"></div></button>
+      <button class="nb" id="n1" onclick="go('s-trade',1)"><span class="nb-ico">📊</span><span class="nb-lbl">Markets</span><div class="nb-dot"></div></button>
       <button class="nb" id="n2" onclick="go('s-portfolio',2)"><span class="nb-ico">💼</span><span class="nb-lbl">Portfolio</span><div class="nb-dot"></div></button>
-      <button class="nb" id="n3"><span class="nb-ico">📋</span><span class="nb-lbl">Orders</span><div class="nb-dot"></div></button>
-      <button class="nb" id="n4"><span class="nb-ico">👤</span><span class="nb-lbl">Profile</span><div class="nb-dot"></div></button>
+      <button class="nb" id="n3" onclick="go('s-orders',3)"><span class="nb-ico">📋</span><span class="nb-lbl">Orders</span><div class="nb-dot"></div></button>
+      <button class="nb" id="n4" onclick="go('s-profile',4)"><span class="nb-ico">👤</span><span class="nb-lbl">Profile</span><div class="nb-dot"></div></button>
     </nav>
 
     <!-- CONFIRM SHEET -->
@@ -947,6 +1093,16 @@ const IC=[
 let cur='s-splash',prev='s-splash',stock=ST[0],ot='buy',chart=null,rng='1M',curMkt='NSE';
 
 // ─── NAV ───────────────────────────────────────────────────────────────────
+function setOrdTab(tab, btn) {
+  document.querySelectorAll('#s-orders .dtab').forEach(t => {
+    t.style.color = 'var(--midgrey)';
+    t.style.borderBottomColor = 'transparent';
+  });
+  btn.style.color = 'var(--sc-teal)';
+  btn.style.borderBottomColor = 'var(--sc-teal)';
+  document.getElementById('ord-pending').style.display = tab === 'pending' ? '' : 'none';
+  document.getElementById('ord-history').style.display = tab === 'history' ? '' : 'none';
+}
 function go(id,navIdx){
   prev=cur;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
