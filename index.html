@@ -4,39 +4,139 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SC Kenya Invest — Standard Chartered</title>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{font-family:'Source Sans 3','Helvetica Neue',Arial,sans-serif;background:#E5E5E5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:32px 16px 48px;overflow-x:hidden;}
-:root{--teal:#00848F;--teal-dk:#006872;--teal-lt:#E0F4F5;--green:#00843D;--green-lt:#E5F4EC;--cobalt:#1B3A6B;--red:#D0021B;--red-lt:#FDECEA;--white:#FFF;--off:#F7F8F8;--ltgrey:#F0F2F2;--midgrey:#C8CCCC;--txtgrey:#6B7273;--dkgrey:#3D4242;--black:#1A1A1A;--r:10px;--rl:16px;--rxl:20px;}
+html,body{font-family:'Source Sans 3',sans-serif;background:#1A1A1A;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:32px 16px 48px;overflow-x:hidden;}
+:root{
+  --teal:#00848F;--teal-dk:#006872;--teal-lt:#E0F4F5;
+  --green:#00843D;--green-btn:#00A550;
+  --cobalt:#1B3A6B;--red:#D0021B;--red-lt:#FDECEA;
+  --white:#FFF;--off:#F7F8F8;--ltgrey:#F0F2F2;
+  --midgrey:#C8CCCC;--txtgrey:#6B7273;--dkgrey:#3D4242;--black:#1A1A1A;
+  --r:10px;--rl:16px;--rxl:20px;
+  --sc-dark:#0D1B2A;--sc-darker:#060E18;
+}
 .pg-label{text-align:center;margin-bottom:20px;}
-.pg-label h1{font-size:11px;font-weight:600;color:#9AABAB;letter-spacing:1.5px;text-transform:uppercase;}
-.pg-label p{font-size:10px;color:#B0BCBC;margin-top:2px;}
+.pg-label h1{font-size:11px;font-weight:600;color:#666;letter-spacing:1.5px;text-transform:uppercase;}
+.pg-label p{font-size:10px;color:#555;margin-top:2px;}
 
-/* PHONE */
-.phone{width:393px;height:852px;background:var(--off);border-radius:54px;border:10px solid #1C1C1E;position:relative;overflow:hidden;box-shadow:0 0 0 1px #3A3A3C,0 50px 100px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.12);flex-shrink:0;}
+/* PHONE SHELL */
+.phone{width:393px;height:852px;border-radius:54px;border:10px solid #1C1C1E;position:relative;overflow:hidden;box-shadow:0 0 0 1px #3A3A3C,0 60px 120px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.08);flex-shrink:0;background:#0D1B2A;}
 .phone::before{content:'';position:absolute;left:-14px;top:120px;width:4px;height:32px;background:#2C2C2E;border-radius:2px 0 0 2px;box-shadow:0 48px 0 #2C2C2E,0 96px 0 #2C2C2E;}
 .phone::after{content:'';position:absolute;right:-14px;top:156px;width:4px;height:64px;background:#2C2C2E;border-radius:0 2px 2px 0;}
 .di{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:126px;height:37px;background:#0E0E0F;border-radius:20px;z-index:999;display:flex;align-items:center;justify-content:center;gap:10px;}
 .di-spk{width:42px;height:6px;border-radius:3px;background:#111;}
 .di-cam{width:13px;height:13px;border-radius:50%;background:#111;border:2.5px solid #222;}
+
+/* STATUS BAR */
 .status{position:absolute;top:0;left:0;right:0;height:54px;z-index:500;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 8px;pointer-events:none;}
-.status-time{font-size:15px;font-weight:600;color:var(--black);}
+.status-time{font-size:15px;font-weight:600;}
 .status-icons{display:flex;align-items:center;gap:6px;}
 
-/* APP ROOT */
-.app{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--off);overflow:hidden;}
-
-/* SCREEN SYSTEM */
-.screen{position:absolute;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;background:var(--off);}
+/* APP */
+.app{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;}
+.screen{position:absolute;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;}
 .screen.active{display:flex;}
-.scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;-ms-overflow-style:none;scrollbar-width:none;}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .scroll::-webkit-scrollbar{display:none;}
 .spcr{height:54px;flex-shrink:0;}
 
-/* BOTTOM NAV */
-#bnav{position:absolute;bottom:0;left:0;right:0;height:82px;background:var(--white);border-top:1px solid var(--ltgrey);display:flex;align-items:flex-start;justify-content:space-around;padding-top:10px;z-index:200;}
+/* ═══════════════════════════════════════
+   SCREEN 1: SPLASH
+═══════════════════════════════════════ */
+#s-splash{background:var(--sc-dark);}
+.splash-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.55) 60%,rgba(0,0,0,.85) 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="393" height="852"><defs><radialGradient id="sun" cx="70%" cy="25%" r="40%"><stop offset="0%" stop-color="%23FFD580" stop-opacity=".6"/><stop offset="100%" stop-color="transparent"/></radialGradient><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%232196F3"/><stop offset="60%" stop-color="%2380DEEA"/><stop offset="100%" stop-color="%23E3F2FD"/></linearGradient><linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231565C0"/><stop offset="100%" stop-color="%230D47A1"/></linearGradient><linearGradient id="sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23F5DEB3"/><stop offset="100%" stop-color="%23DEB887"/></linearGradient></defs><rect width="393" height="852" fill="url(%23sky)"/><ellipse cx="280" cy="180" rx="80" ry="80" fill="url(%23sun)"/><rect y="480" width="393" height="140" fill="url(%23sea)"/><rect y="580" width="393" height="272" fill="url(%23sand)"/><ellipse cx="80" cy="570" rx="120" ry="20" fill="%23C8A882" opacity=".5"/><ellipse cx="320" cy="585" rx="100" ry="18" fill="%23C8A882" opacity=".4"/><rect x="40" y="520" width="8" height="60" fill="%23795548" rx="4"/><ellipse cx="44" cy="520" rx="30" ry="25" fill="%2366BB6A" opacity=".8"/><rect x="280" y="510" width="7" height="70" fill="%23795548" rx="3"/><ellipse cx="283" cy="510" rx="28" ry="22" fill="%2366BB6A" opacity=".7"/><rect x="150" y="530" width="6" height="55" fill="%23795548" rx="3"/><ellipse cx="153" cy="530" rx="25" ry="20" fill="%2366BB6A" opacity=".75"/><path d="M60 610 Q80 590 100 610 Q80 600 60 610" fill="%23A0896D" opacity=".6"/><path d="M200 620 Q225 598 250 620 Q225 610 200 620" fill="%23A0896D" opacity=".6"/><path d="M310 615 Q330 600 350 615 Q330 607 310 615" fill="%23A0896D" opacity=".6"/></svg>') center/cover;
+}
+.splash-top{position:relative;z-index:2;padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between;}
+.splash-bell{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.sc-logo-white{display:flex;align-items:center;gap:8px;}
+.sc-logo-white svg{width:28px;height:28px;}
+.sc-logo-text{display:flex;flex-direction:column;line-height:1.05;}
+.sc-lt1{font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px;}
+.sc-lt2{font-size:11px;font-weight:300;color:#fff;text-transform:uppercase;letter-spacing:.5px;}
+.splash-settings{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.splash-content{position:relative;z-index:2;padding:0 24px;margin-top:auto;padding-bottom:52px;}
+.splash-greeting{font-size:15px;color:rgba(255,255,255,.8);margin-bottom:4px;}
+.splash-name{font-size:28px;font-weight:700;color:#fff;margin-bottom:48px;}
+.splash-login-btn{
+  background:var(--green-btn);border:none;border-radius:12px;
+  padding:16px 24px;font-size:16px;font-weight:700;color:#fff;
+  cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;
+  width:100%;justify-content:center;letter-spacing:.3px;
+  box-shadow:0 4px 20px rgba(0,165,80,.4);
+}
+.splash-login-btn:active{transform:scale(.98);}
+
+/* ═══════════════════════════════════════
+   SCREEN 2: LOGIN
+═══════════════════════════════════════ */
+#s-login{background:#0D0D0D;}
+.login-wrap{flex:1;display:flex;flex-direction:column;padding:0 28px;}
+.login-top{display:flex;justify-content:flex-end;padding:16px 0;}
+.login-close{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;cursor:pointer;border:none;font-family:inherit;}
+.login-title{font-size:28px;font-weight:700;color:#fff;margin-bottom:4px;margin-top:32px;}
+.login-flag{display:flex;align-items:center;gap:8px;margin-bottom:40px;}
+.ke-flag{font-size:20px;}
+.login-field{margin-bottom:14px;}
+.login-input{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;padding:16px 16px;font-size:16px;color:#fff;font-family:inherit;outline:none;transition:border-color .2s;}
+.login-input::placeholder{color:rgba(255,255,255,.35);}
+.login-input:focus{border-color:var(--teal);}
+.pw-row{position:relative;}
+.pw-row .login-input{padding-right:80px;}
+.forgot-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;color:var(--green-btn);background:none;border:none;cursor:pointer;font-family:inherit;letter-spacing:.5px;}
+.login-btns{display:flex;gap:12px;margin-top:8px;}
+.login-submit{flex:1;background:var(--green-btn);border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(0,165,80,.35);}
+.login-bio{width:54px;height:54px;border-radius:12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;flex-shrink:0;}
+.login-register{margin-top:20px;}
+.lr-label{font-size:13px;color:rgba(255,255,255,.4);}
+.lr-link{font-size:13px;color:var(--green-btn);font-weight:600;background:none;border:none;cursor:pointer;font-family:inherit;}
+.login-alert{background:#B71C1C;border-radius:0 0 12px 12px;padding:10px 20px;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.la-icon{font-size:14px;}
+.la-text{font-size:11px;color:rgba(255,255,255,.9);font-weight:600;}
+
+/* ═══════════════════════════════════════
+   SCREEN 3: INVESTING MENU
+═══════════════════════════════════════ */
+#s-menu{background:#f0f2f4;}
+.menu-header{background:var(--teal);padding:16px 20px 18px;flex-shrink:0;}
+.mh-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.mh-back{background:none;border:none;color:rgba(255,255,255,.8);font-size:22px;cursor:pointer;padding:2px;}
+.mh-actions{display:flex;gap:10px;}
+.mh-btn{background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;}
+.mh-title{font-size:20px;font-weight:700;color:#fff;}
+.mh-sub{font-size:12px;color:rgba(255,255,255,.7);margin-top:1px;}
+.menu-last-login{background:rgba(255,255,255,.12);padding:6px 20px;font-size:11px;color:rgba(255,255,255,.75);flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1);}
+.menu-list{padding:10px 0;}
+.menu-section{font-size:11px;font-weight:700;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.8px;padding:12px 20px 6px;}
+.menu-item{
+  display:flex;align-items:center;gap:14px;
+  background:#fff;padding:14px 20px;cursor:pointer;
+  border-bottom:1px solid #E8EAEB;position:relative;
+}
+.menu-item:first-of-type{border-top:1px solid #E8EAEB;}
+.menu-item:active{background:#F5F7F7;}
+.mi-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.mi-info{flex:1;}
+.mi-label{font-size:15px;font-weight:600;color:#1A1A1A;}
+.mi-sub{font-size:12px;color:var(--txtgrey);margin-top:1px;}
+.mi-arrow{color:var(--midgrey);font-size:18px;}
+.mi-badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:6px;}
+.mi-new{background:var(--teal);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.3px;}
+.mi-ext{font-size:13px;color:var(--teal);}
+/* Trading section highlight */
+.menu-item.trading-item{background:linear-gradient(135deg,#E0F4F5 0%,#F0F8F9 100%);}
+.menu-item.trading-item .mi-label{color:var(--teal);}
+
+/* ═══════════════════════════════════════
+   BOTTOM NAV (shared)
+═══════════════════════════════════════ */
+#bnav{position:absolute;bottom:0;left:0;right:0;height:82px;background:#fff;border-top:1px solid #E8EAEB;display:flex;align-items:flex-start;justify-content:space-around;padding-top:10px;z-index:200;}
 .nb{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1;background:none;border:none;padding:4px 0;font-family:inherit;}
 .nb-ico{font-size:22px;line-height:1;}
 .nb-lbl{font-size:10px;font-weight:600;color:var(--midgrey);}
@@ -44,654 +144,1133 @@ html,body{font-family:'Source Sans 3','Helvetica Neue',Arial,sans-serif;backgrou
 .nb-dot{width:4px;height:4px;border-radius:50%;background:var(--teal);opacity:0;}
 .nb.active .nb-dot{opacity:1;}
 
-/* APP BAR */
-.abar{background:var(--white);border-bottom:1px solid var(--ltgrey);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.bback{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;color:var(--teal);font-size:15px;font-weight:600;font-family:inherit;padding:0;}
-.bar-r{display:flex;align-items:center;gap:10px;}
-.bico{width:34px;height:34px;border-radius:50%;background:var(--ltgrey);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:15px;}
-.uav{width:34px;height:34px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;}
+/* ═══════════════════════════════════════
+   SCREEN 4: TRADING HOME
+═══════════════════════════════════════ */
+#s-trade{background:#0D1B2A;}
+/* Ticker strip */
+.ticker{
+  background:#0A1520;border-bottom:1px solid rgba(255,255,255,.06);
+  height:36px;overflow:hidden;flex-shrink:0;position:relative;display:flex;align-items:center;
+}
+.ticker-inner{display:flex;gap:0;animation:ticker-scroll 28s linear infinite;white-space:nowrap;}
+@keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tick-item{display:inline-flex;align-items:center;gap:6px;padding:0 18px;border-right:1px solid rgba(255,255,255,.06);}
+.tick-sym{font-size:11px;font-weight:700;color:rgba(255,255,255,.9);}
+.tick-price{font-size:11px;color:rgba(255,255,255,.6);}
+.tick-chg{font-size:11px;font-weight:600;}
+.tick-chg.up{color:#00E676;}
+.tick-chg.dn{color:#FF5252;}
 
-/* SC LOGO */
-.logo{display:flex;align-items:center;}
-.lbars{display:flex;flex-direction:column;gap:2px;margin-right:6px;}
-.lbar{height:3px;border-radius:1.5px;}
-.lwords{display:flex;flex-direction:column;line-height:1.1;}
-.lw1{font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.4px;}
-.lw2{font-size:12px;font-weight:300;color:var(--teal);text-transform:uppercase;letter-spacing:.4px;}
-.ldiv{width:1px;height:24px;background:var(--midgrey);margin:0 8px;}
-.lsub{display:flex;flex-direction:column;line-height:1.1;}
-.lsub1{font-size:13px;font-weight:700;color:var(--black);}
-.lsub2{font-size:10px;color:var(--txtgrey);}
+/* Market status bar */
+.mkt-bar{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.15);border-radius:0;padding:8px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.mkt-status{display:flex;align-items:center;gap:8px;}
+.mkt-dot{width:7px;height:7px;border-radius:50%;background:#00E676;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.mkt-text{font-size:12px;color:#00E676;font-weight:600;}
+.mkt-bell{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;}
 
-/* HOME */
-.greeting{background:var(--white);padding:14px 20px 12px;}
-.gname{font-size:20px;font-weight:700;color:var(--black);}
-.gsub{font-size:13px;color:var(--txtgrey);margin-top:1px;}
-.hero{margin:12px 16px;background:var(--teal);border-radius:var(--rxl);padding:22px 20px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;bottom:-40px;right:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.06);}
-.hero::after{content:'';position:absolute;top:-20px;right:60px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.04);}
-.hlbl{font-size:11px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.8px;}
-.hamt{font-size:32px;font-weight:700;color:#fff;margin:4px 0 2px;letter-spacing:-.5px;}
-.hchg{font-size:13px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:6px;}
-.hbadge{background:rgba(255,255,255,.15);padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600;color:#7DFFC1;}
-.hhr{border:none;border-top:1px solid rgba(255,255,255,.15);margin:14px 0;}
-.hstats{display:flex;}
-.hstat{flex:1;border-right:1px solid rgba(255,255,255,.15);padding-right:12px;margin-right:12px;}
-.hstat:last-child{border-right:none;padding-right:0;margin-right:0;}
-.hslbl{font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;}
-.hsval{font-size:14px;font-weight:600;color:#fff;margin-top:1px;}
-.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:4px 16px 16px;}
-.qtile{background:var(--white);border:1px solid var(--ltgrey);border-radius:var(--r);padding:12px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
-.qtile:active{background:var(--ltgrey);}
-.qico{width:36px;height:36px;border-radius:10px;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;font-size:17px;}
-.qlbl{font-size:11px;font-weight:600;color:var(--dkgrey);text-align:center;line-height:1.2;}
-.sechd{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 10px;}
-.sectit{font-size:16px;font-weight:700;color:var(--black);}
-.seclink{font-size:13px;font-weight:600;color:var(--teal);background:none;border:none;cursor:pointer;font-family:inherit;}
-.frow{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;}
-.frow::-webkit-scrollbar{display:none;}
-.fpill{flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--midgrey);background:var(--white);color:var(--txtgrey);font-family:inherit;white-space:nowrap;}
-.fpill.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+/* Portfolio card */
+.port-card{margin:14px 16px;background:linear-gradient(135deg,#1B3A6B 0%,#0D2A50 100%);border-radius:18px;padding:18px 20px;border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;}
+.port-card::before{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.03);}
+.pc-label{font-size:11px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;}
+.pc-value{font-size:30px;font-weight:700;color:#fff;margin:4px 0 2px;letter-spacing:-.5px;display:flex;align-items:center;gap:10px;}
+.pc-eye{font-size:16px;opacity:.5;cursor:pointer;}
+.pc-change{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.pc-badge{padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;}
+.pc-badge.dn{background:rgba(255,82,82,.2);color:#FF5252;}
+.pc-badge.up{background:rgba(0,230,118,.2);color:#00E676;}
+.pc-lost{font-size:12px;color:rgba(255,255,255,.5);}
+.pc-orders{background:rgba(0,0,0,.2);border-radius:10px;padding:10px 14px;margin-top:4px;}
+.pc-orders-hd{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:6px;display:flex;justify-content:space-between;}
+.pc-orders-hd span:last-child{color:var(--teal);cursor:pointer;}
+.pc-order-row{display:flex;align-items:center;justify-content:space-between;}
+.pc-or-left{display:flex;align-items:center;gap:8px;}
+.pc-or-sym{font-size:14px;font-weight:700;color:#fff;}
+.pc-or-badge{background:rgba(0,230,118,.25);color:#00E676;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;}
+.pc-or-det{font-size:11px;color:rgba(255,255,255,.4);}
+.pc-or-val{font-size:14px;font-weight:700;color:#fff;}
 
-/* STOCK ROW */
-.srow{display:flex;align-items:center;gap:12px;background:var(--white);padding:13px 20px;cursor:pointer;border-bottom:1px solid var(--ltgrey);}
-.srow:last-child{border-bottom:none;}
-.srow:active{background:#F5F7F7;}
-.sico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
-.sinf{flex:1;min-width:0;}
-.ssym{font-size:15px;font-weight:700;color:var(--black);}
-.snm{font-size:12px;color:var(--txtgrey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
-.spc{text-align:right;}
-.spr{font-size:15px;font-weight:700;color:var(--black);}
-.sch{font-size:12px;font-weight:600;margin-top:2px;}
-.up{color:#00843D;} .dn{color:#D0021B;}
+/* Section headers */
+.trade-sechd{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 10px;}
+.trade-sectit{font-size:15px;font-weight:700;color:#fff;}
+.trade-seclink{font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:inherit;}
 
-/* DETAIL */
-.dtop{background:var(--white);border-bottom:1px solid var(--ltgrey);padding:10px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.liverow{display:flex;align-items:center;gap:4px;margin-left:auto;}
-.ldot{width:6px;height:6px;border-radius:50%;background:#00843D;animation:bl 2s infinite;}
-@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
-.exbdg{background:var(--ltgrey);border-radius:6px;padding:3px 10px;font-size:12px;font-weight:600;color:var(--txtgrey);}
-.dpc{background:var(--white);padding:18px 20px 14px;border-bottom:8px solid var(--off);flex-shrink:0;}
-.dpsym{font-size:12px;font-weight:600;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
-.dprow{display:flex;align-items:baseline;justify-content:space-between;}
-.dppr{font-size:32px;font-weight:700;color:var(--black);letter-spacing:-.5px;}
-.dpbdg{display:inline-flex;align-items:center;gap:3px;padding:5px 12px;border-radius:6px;font-size:14px;font-weight:700;}
-.dpbdg.up{background:#E8F7EE;color:#00843D;}
-.dpbdg.dn{background:var(--red-lt);color:var(--red);}
-.dpmeta{font-size:12px;color:var(--txtgrey);margin-top:4px;display:flex;align-items:center;gap:6px;}
-.rbar{display:flex;background:var(--off);border-radius:10px;padding:4px;margin:14px 16px 0;flex-shrink:0;}
-.rbtn{flex:1;padding:7px 4px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border-radius:7px;border:none;color:var(--txtgrey);background:transparent;font-family:inherit;}
-.rbtn.active{background:var(--white);color:var(--teal);box-shadow:0 1px 3px rgba(0,0,0,.1);}
-.cwrap{background:var(--white);padding:14px 12px 8px;margin-bottom:8px;}
-.cbox{position:relative;height:180px;}
-.stcard{background:var(--white);margin-bottom:8px;padding:16px 20px;}
-.stgrid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-.sti{padding:10px 0;border-bottom:1px solid var(--ltgrey);display:flex;justify-content:space-between;align-items:center;font-size:13px;}
-.sti:nth-last-child(-n+2){border-bottom:none;}
-.sti:nth-child(odd){padding-right:16px;border-right:1px solid var(--ltgrey);}
-.sti:nth-child(even){padding-left:16px;}
-.stlbl{color:var(--txtgrey);}
-.stval{font-weight:700;color:var(--black);}
-.abtcard{background:var(--white);padding:16px 20px;margin-bottom:8px;}
-.abttit{font-size:15px;font-weight:700;color:var(--black);margin-bottom:8px;}
-.abttxt{font-size:14px;color:var(--dkgrey);line-height:1.65;}
-.bsbar{background:var(--white);border-top:1px solid var(--ltgrey);padding:12px 16px;display:flex;gap:10px;flex-shrink:0;}
-.bsell{flex:1;padding:14px;background:#fff;border:2px solid var(--red);border-radius:var(--r);font-size:15px;font-weight:700;color:var(--red);cursor:pointer;font-family:inherit;}
-.bsell:active{background:var(--red-lt);}
-.bbuy{flex:1;padding:14px;background:var(--teal);border:none;border-radius:var(--r);font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;}
-.bbuy:active{background:var(--teal-dk);}
+/* Movers horizontal scroll */
+.movers-scroll{display:flex;gap:10px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none;}
+.movers-scroll::-webkit-scrollbar{display:none;}
+.mover-card{flex-shrink:0;width:112px;background:#152230;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px;}
+.mc-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;}
+.mc-full{font-size:10px;color:rgba(255,255,255,.4);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mc-price{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+.mc-chg{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;}
+.mc-chg.up{background:rgba(0,230,118,.15);color:#00E676;}
+.mc-chg.dn{background:rgba(255,82,82,.15);color:#FF5252;}
+.mc-sparkline{height:28px;margin:8px 0 0;opacity:.7;}
 
-/* ORDER */
-.sstrip{background:var(--white);padding:14px 20px;border-bottom:1px solid var(--ltgrey);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.sssym{font-size:18px;font-weight:700;color:var(--black);}
-.ssnm{font-size:12px;color:var(--txtgrey);margin-top:1px;}
-.ssprice{font-size:20px;font-weight:700;color:var(--black);text-align:right;}
-.seg{display:flex;background:var(--ltgrey);border-radius:var(--r);padding:4px;margin:14px 16px 0;flex-shrink:0;}
-.segb{flex:1;padding:11px;font-size:15px;font-weight:700;text-align:center;cursor:pointer;border-radius:8px;border:none;font-family:inherit;color:var(--txtgrey);background:transparent;}
-.segb.buy.active{background:var(--teal);color:#fff;}
-.segb.sell.active{background:var(--red);color:#fff;}
-.cwrap2{padding:14px 16px 0;}
-.clbl{font-size:11px;font-weight:600;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;}
-.ccard{background:var(--white);border:1.5px solid var(--ltgrey);border-radius:var(--rl);padding:13px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
-.ccard:active{background:var(--ltgrey);}
-.cico{width:40px;height:40px;border-radius:10px;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.cicobars{display:flex;flex-direction:column;gap:2.5px;}
-.cicobar{border-radius:1px;}
-.cinf{flex:1;}
-.cnm{font-size:14px;font-weight:700;color:var(--black);}
-.cnum{font-size:12px;color:var(--txtgrey);margin-top:1px;}
-.cright{text-align:right;}
-.cbal{font-size:15px;font-weight:700;color:#00843D;}
-.cavail{font-size:11px;color:var(--txtgrey);}
-.carr{font-size:16px;color:var(--midgrey);margin-left:4px;}
-.fwrap{padding:14px 16px 0;}
-.fg{margin-bottom:14px;}
-.fl{font-size:11px;font-weight:600;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;}
-.fi{width:100%;background:var(--white);border:1.5px solid var(--midgrey);border-radius:var(--r);padding:13px 14px;font-size:16px;font-weight:600;color:var(--black);font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;}
-.fi:focus{border-color:var(--teal);}
-.fi::placeholder{color:var(--midgrey);font-weight:400;font-size:14px;}
+/* Filter tabs */
+.filter-tabs{display:flex;gap:6px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
+.filter-tabs::-webkit-scrollbar{display:none;}
+.ftab{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:inherit;transition:all .15s;white-space:nowrap;}
+.ftab.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+/* Stock list (dark) */
+.srow-dk{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);}
+.srow-dk:active{background:rgba(255,255,255,.03);}
+.sico-dk{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.sinf-dk{flex:1;min-width:0;}
+.ssym-dk{font-size:15px;font-weight:700;color:#fff;}
+.snm-dk{font-size:11px;color:rgba(255,255,255,.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+.spc-dk{text-align:right;}
+.spr-dk{font-size:15px;font-weight:700;color:#fff;}
+.sch-dk{font-size:11px;font-weight:700;margin-top:2px;}
+.up{color:#00E676;} .dn{color:#FF5252;}
+
+/* Search bar dark */
+.srch-dk{padding:14px 16px 0;}
+.srch-inner{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;}
+.srch-inner input{flex:1;background:transparent;border:none;font-size:14px;color:#fff;outline:none;font-family:inherit;}
+.srch-inner input::placeholder{color:rgba(255,255,255,.3);}
+
+/* Buy stock FAB */
+.buy-fab{position:absolute;bottom:96px;right:18px;background:var(--green-btn);border:none;border-radius:50px;padding:14px 22px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;box-shadow:0 4px 20px rgba(0,165,80,.45);z-index:10;}
+
+/* ═══════════════════════════════════════
+   SCREEN 5: STOCK DETAIL
+═══════════════════════════════════════ */
+#s-detail{background:#0D1B2A;}
+.dbar{background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);padding:12px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.d-back{background:none;border:none;color:var(--teal);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:4px;}
+.d-mktbadge{background:rgba(0,132,143,.2);border:1px solid rgba(0,132,143,.3);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--teal);margin-left:auto;}
+.d-live{display:flex;align-items:center;gap:4px;}
+.d-price-area{background:rgba(255,255,255,.03);padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;}
+.d-sym{font-size:12px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.d-price{font-size:34px;font-weight:700;color:#fff;letter-spacing:-.5px;}
+.d-badge{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:8px;font-size:13px;font-weight:700;margin-left:10px;}
+.d-badge.up{background:rgba(0,230,118,.15);color:#00E676;}
+.d-badge.dn{background:rgba(255,82,82,.15);color:#FF5252;}
+.d-name{font-size:13px;color:rgba(255,255,255,.45);margin-top:4px;}
+.d-mktclose{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:rgba(0,230,118,.8);}
+
+/* Detail tabs */
+.dtabs{display:flex;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
+.dtab{flex:1;padding:11px;text-align:center;font-size:13px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent;background:none;border:none;font-family:inherit;position:relative;}
+.dtab.active{color:var(--teal);}
+.dtab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--teal);}
+
+/* Range selector */
+.range-sel{display:flex;background:rgba(255,255,255,.04);border-radius:10px;padding:4px;margin:14px 16px 0;flex-shrink:0;}
+.rbtn{flex:1;padding:7px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;border-radius:7px;border:none;color:rgba(255,255,255,.4);background:transparent;font-family:inherit;}
+.rbtn.active{background:var(--teal);color:#fff;}
+
+.chart-wrap-dk{background:transparent;padding:12px 10px 8px;margin-bottom:4px;}
+.cbox-dk{position:relative;height:160px;}
+
+.stats-dk{padding:14px 18px;border-top:1px solid rgba(255,255,255,.06);}
+.stats-dk-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.stat-row{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;font-size:13px;}
+.stat-row:nth-child(odd){padding-right:14px;border-right:1px solid rgba(255,255,255,.05);}
+.stat-row:nth-child(even){padding-left:14px;}
+.stat-row:nth-last-child(-n+2){border-bottom:none;}
+.stlbl{color:rgba(255,255,255,.4);}
+.stval{font-weight:700;color:#fff;}
+
+/* You own */
+.you-own{padding:12px 18px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.yo-lbl{font-size:13px;color:rgba(255,255,255,.5);}
+.yo-val{font-size:15px;font-weight:700;color:#fff;}
+.yo-shares{font-size:11px;color:rgba(255,255,255,.35);margin-top:1px;}
+.yo-num{font-size:24px;font-weight:700;color:var(--teal);display:flex;align-items:center;gap:4px;}
+
+/* Buy / Sell bar */
+.bs-bar{background:rgba(13,27,42,.95);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.08);padding:12px 16px;display:flex;gap:10px;flex-shrink:0;}
+.btn-sell-dk{flex:1;padding:15px;background:transparent;border:2px solid #FF5252;border-radius:12px;font-size:15px;font-weight:700;color:#FF5252;cursor:pointer;font-family:inherit;}
+.btn-buy-dk{flex:1;padding:15px;background:var(--teal);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(0,132,143,.35);}
+
+/* ═══════════════════════════════════════
+   SCREEN 6: ORDER
+═══════════════════════════════════════ */
+#s-order{background:#0D1B2A;}
+.obar{background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);padding:12px 18px;display:flex;align-items:center;flex-shrink:0;}
+.obar-title{flex:1;text-align:center;font-size:16px;font-weight:700;color:#fff;}
+.o-stock-strip{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.oss-left .sym{font-size:18px;font-weight:700;color:#fff;}
+.oss-left .name{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;}
+.oss-right{text-align:right;}
+.oss-price{font-size:20px;font-weight:700;color:#fff;}
+.o-seg{display:flex;background:rgba(255,255,255,.06);border-radius:12px;padding:4px;margin:14px 16px 0;flex-shrink:0;}
+.oseg-btn{flex:1;padding:11px;font-size:15px;font-weight:700;text-align:center;cursor:pointer;border-radius:9px;border:none;font-family:inherit;color:rgba(255,255,255,.4);background:transparent;}
+.oseg-btn.buy.active{background:var(--teal);color:#fff;}
+.oseg-btn.sell.active{background:#FF5252;color:#fff;}
+/* CASA card dark */
+.casa-dk{padding:14px 16px 0;}
+.casa-dk-lbl{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.casa-dk-card{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
+.casa-dk-card:active{background:rgba(255,255,255,.08);}
+.casa-ico-dk{width:42px;height:42px;border-radius:12px;background:rgba(0,132,143,.2);border:1px solid rgba(0,132,143,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.casa-bars{display:flex;flex-direction:column;gap:3px;}
+.cb1{width:18px;height:2.5px;background:var(--teal);border-radius:1.5px;}
+.cb2{width:14px;height:2.5px;background:#00843D;border-radius:1.5px;}
+.cb3{width:10px;height:2.5px;background:#1B3A6B;border-radius:1.5px;}
+.casa-inf{flex:1;}
+.casa-nm{font-size:14px;font-weight:700;color:#fff;}
+.casa-num{font-size:12px;color:rgba(255,255,255,.4);margin-top:1px;}
+.casa-rt{text-align:right;}
+.casa-bal-dk{font-size:15px;font-weight:700;color:#00E676;}
+.casa-av{font-size:11px;color:rgba(255,255,255,.35);}
+.casa-arr{font-size:18px;color:rgba(255,255,255,.3);}
+/* Form dark */
+.form-dk{padding:14px 16px 0;}
+.fdg{margin-bottom:14px;}
+.fdl{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:7px;}
+.fdi{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 14px;font-size:16px;font-weight:600;color:#fff;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;}
+.fdi:focus{border-color:var(--teal);}
+.fdi::placeholder{color:rgba(255,255,255,.25);font-weight:400;font-size:14px;}
 .selwrap{position:relative;}
-.selwrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--txtgrey);pointer-events:none;}
-.sumcard{margin:14px 16px 0;background:var(--teal-lt);border:1.5px solid rgba(0,132,143,.2);border-radius:var(--rl);overflow:hidden;}
-.sumrow{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(0,132,143,.1);font-size:14px;}
-.sumrow:last-child{border-bottom:none;}
-.sumlbl{color:var(--dkgrey);}
-.sumval{font-weight:700;color:var(--black);}
-.sumtot{font-weight:700;color:var(--teal);font-size:17px;}
-.ctawrap{padding:14px 16px 0;}
-.ctabtn{width:100%;padding:16px;background:var(--teal);border:none;border-radius:var(--r);font-size:16px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;}
-.ctabtn.sell{background:var(--red);}
-.ctabtn:active{opacity:.85;}
-.pwby{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 0 4px;font-size:12px;color:var(--txtgrey);}
-.v22{background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;}
+.selwrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);pointer-events:none;}
+.fdi option{background:#0D1B2A;color:#fff;}
+/* Summary dark */
+.sum-dk{margin:14px 16px 0;background:rgba(0,132,143,.08);border:1px solid rgba(0,132,143,.2);border-radius:14px;overflow:hidden;}
+.sumr-dk{display:flex;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(0,132,143,.1);font-size:13px;}
+.sumr-dk:last-child{border-bottom:none;}
+.suml-dk{color:rgba(255,255,255,.5);}
+.sumv-dk{font-weight:700;color:#fff;}
+.sumtot-dk{font-weight:700;color:var(--teal);font-size:16px;}
+/* Charges breakdown */
+.charges-detail{padding:4px 16px 8px;border-top:1px solid rgba(255,255,255,.05);}
+.cd-row{display:flex;justify-content:space-between;padding:4px 0;font-size:11px;}
+.cdl{color:rgba(255,255,255,.3);}
+.cdv{color:rgba(255,255,255,.5);}
+.cta-dk{padding:14px 16px 0;}
+.ctab-dk{width:100%;padding:16px;background:var(--teal);border:none;border-radius:12px;font-size:16px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(0,132,143,.4);}
+.ctab-dk.sell{background:#FF5252;box-shadow:0 4px 16px rgba(255,82,82,.35);}
+.powered{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 0 4px;font-size:11px;color:rgba(255,255,255,.3);}
+.v22tag{background:var(--teal);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;}
+.pb{height:20px;}
 
-/* PORTFOLIO */
-.phero{background:var(--cobalt);padding:20px 20px 22px;position:relative;overflow:hidden;flex-shrink:0;}
-.phero::before{content:'';position:absolute;right:-20px;top:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.04);}
-.phlbl{font-size:11px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.8px;}
-.phval{font-size:28px;font-weight:700;color:#fff;margin:4px 0 2px;}
-.phsub{font-size:13px;color:rgba(255,255,255,.65);}
-.pmets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 16px;}
-.pmet{background:var(--white);border:1px solid var(--ltgrey);border-radius:var(--r);padding:12px 14px;}
-.pmlbl{font-size:11px;color:var(--txtgrey);text-transform:uppercase;letter-spacing:.5px;}
-.pmval{font-size:17px;font-weight:700;color:var(--black);margin-top:3px;}
-.pmval.pos{color:#00843D;} .pmval.neg{color:var(--red);}
-.hrow{display:flex;align-items:center;gap:12px;background:var(--white);padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;}
-.hrow:last-child{border-bottom:none;}
-.hrow:active{background:#F5F7F7;}
-.hico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+/* OVERLAY / CONFIRM SHEET */
+.ovl{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:900;display:none;flex-direction:column;justify-content:flex-end;}
+.ovl.show{display:flex;}
+.sheet{background:#152230;border-radius:24px 24px 0 0;border-top:1px solid rgba(255,255,255,.08);padding:0 20px 48px;max-height:90%;overflow-y:auto;}
+.sh-handle{width:36px;height:5px;background:rgba(255,255,255,.15);border-radius:3px;margin:12px auto 18px;}
+.sh-title{font-size:18px;font-weight:700;color:#fff;text-align:center;margin-bottom:4px;}
+.sh-sub{font-size:12px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.sh-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px;}
+.sh-row:last-of-type{border-bottom:none;}
+.shlbl{color:rgba(255,255,255,.45);}
+.shval{font-weight:700;color:#fff;}
+.sh-btns{display:flex;gap:10px;margin-top:18px;}
+.sh-cancel{flex:1;padding:14px;background:rgba(255,255,255,.06);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;}
+.sh-confirm{flex:2;padding:14px;background:var(--teal);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;}
+.sh-confirm.sell{background:#FF5252;}
+/* Success */
+.suc-ring{width:70px;height:70px;border-radius:50%;background:rgba(0,230,118,.15);border:2px solid #00E676;display:flex;align-items:center;justify-content:center;font-size:28px;margin:8px auto 14px;}
+.suc-h{font-size:19px;font-weight:700;color:#fff;text-align:center;margin-bottom:8px;}
+.suc-p{font-size:13px;color:rgba(255,255,255,.5);text-align:center;line-height:1.6;margin-bottom:20px;}
+.suc-done{width:100%;padding:14px;background:var(--teal);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;}
+
+/* ═══════════════════════════════════════
+   SCREEN 7: PORTFOLIO
+═══════════════════════════════════════ */
+#s-portfolio{background:#0D1B2A;}
+.port-hero{background:linear-gradient(135deg,#1B3A6B,#0D2A50);padding:20px 18px 22px;flex-shrink:0;position:relative;overflow:hidden;}
+.port-hero::before{content:'';position:absolute;right:-20px;top:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.03);}
+.ph-tabs{display:flex;gap:0;margin-bottom:14px;}
+.ph-tab{font-size:14px;font-weight:600;color:rgba(255,255,255,.45);padding-bottom:8px;border-bottom:2px solid transparent;cursor:pointer;margin-right:20px;background:none;border:none;font-family:inherit;}
+.ph-tab.active{color:#fff;border-bottom-color:var(--teal);}
+.donut-wrap{display:flex;align-items:center;justify-content:center;margin:4px 0 12px;}
+.donut-center{position:relative;width:140px;height:140px;}
+.donut-center canvas{position:absolute;top:0;left:0;}
+.donut-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.dt-label{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;}
+.dt-val{font-size:20px;font-weight:700;color:#fff;margin:2px 0;}
+.dt-chg{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.dt-chg.dn{background:rgba(255,82,82,.2);color:#FF5252;}
+.port-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 16px;}
+.pmet{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px 14px;}
+.pm-lbl{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.4px;}
+.pm-val{font-size:16px;font-weight:700;color:#fff;margin-top:3px;}
+.pm-val.pos{color:#00E676;} .pm-val.neg{color:#FF5252;}
+
+.hold-row{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;}
+.hold-row:active{background:rgba(255,255,255,.02);}
+.hico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
 .hinf{flex:1;min-width:0;}
-.hsym{font-size:15px;font-weight:700;color:var(--black);}
-.hdet{font-size:12px;color:var(--txtgrey);margin-top:1px;}
+.hsym{font-size:15px;font-weight:700;color:#fff;}
+.hdet{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;}
 .hrgt{text-align:right;}
-.hval{font-size:15px;font-weight:700;color:var(--black);}
-.hpl{font-size:12px;font-weight:600;margin-top:1px;}
+.hval{font-size:15px;font-weight:700;color:#fff;}
+.hpl{font-size:11px;font-weight:700;margin-top:2px;}
 
-/* DISCOVER */
-.srchw{padding:12px 16px;background:var(--white);border-bottom:1px solid var(--ltgrey);}
-.srchb{display:flex;align-items:center;gap:10px;background:var(--off);border:1.5px solid var(--ltgrey);border-radius:var(--r);padding:11px 14px;}
-.srchb input{flex:1;background:transparent;border:none;font-size:15px;color:var(--black);outline:none;font-family:inherit;}
-.srchb input::placeholder{color:var(--midgrey);}
-.mvrs{display:flex;gap:10px;padding:0 16px 4px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;}
-.mvrs::-webkit-scrollbar{display:none;}
-.mvcard{flex-shrink:0;width:110px;background:var(--white);border:1px solid var(--ltgrey);border-radius:var(--r);padding:12px;cursor:pointer;}
-.mvcard:active{border-color:var(--teal);}
-.mvsym{font-size:14px;font-weight:700;color:var(--black);}
-.mvprice{font-size:12px;color:var(--txtgrey);margin-top:1px;}
-.mvchg{margin-top:8px;display:inline-flex;align-items:center;gap:3px;padding:3px 7px;border-radius:4px;font-size:12px;font-weight:700;}
-.mvchg.up{background:#E8F7EE;color:#00843D;}
-.mvchg.dn{background:var(--red-lt);color:var(--red);}
-
-/* BOTTOM SHEET */
-.overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:900;display:none;flex-direction:column;justify-content:flex-end;}
-.overlay.show{display:flex;}
-.sheet{background:var(--white);border-radius:24px 24px 0 0;border-top:1px solid var(--ltgrey);padding:0 20px 44px;max-height:90%;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.shdl{width:36px;height:5px;background:var(--midgrey);border-radius:3px;margin:12px auto 18px;}
-.shtit{font-size:18px;font-weight:700;color:var(--black);text-align:center;margin-bottom:4px;}
-.shsub{font-size:13px;color:var(--txtgrey);text-align:center;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:6px;}
-.shrow{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--ltgrey);font-size:14px;}
-.shrow:last-of-type{border-bottom:none;}
-.srlbl{color:var(--txtgrey);}
-.srval{font-weight:700;color:var(--black);}
-.shbtns{display:flex;gap:10px;margin-top:18px;}
-.shcancel{flex:1;padding:14px;background:var(--ltgrey);border:none;border-radius:var(--r);font-size:15px;font-weight:700;color:var(--dkgrey);cursor:pointer;font-family:inherit;}
-.shconfirm{flex:2;padding:14px;background:var(--teal);border:none;border-radius:var(--r);font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;}
-.shconfirm.sell{background:var(--red);}
-.sucring{width:72px;height:72px;border-radius:50%;background:var(--green-lt);border:2px solid #00843D;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;}
-.such{font-size:20px;font-weight:700;color:var(--black);text-align:center;margin-bottom:8px;}
-.sucp{font-size:14px;color:var(--txtgrey);line-height:1.6;margin-bottom:22px;text-align:center;}
-.sucdone{width:100%;padding:15px;background:var(--teal);border:none;border-radius:var(--r);font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;}
-.pb{height:16px;}
-.scmini{display:flex;flex-direction:column;gap:2px;}
-.scmb{border-radius:1px;}
+/* ═══════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════ */
+.sc-mini-bars{display:flex;flex-direction:column;gap:2px;}
+.sc-mb{border-radius:1px;}
 </style>
 </head>
 <body>
 
 <div class="pg-label">
-  <h1>SC Kenya Invest — Mobile Prototype</h1>
+  <h1>SC Kenya Invest — Interactive Prototype</h1>
   <p>Standard Chartered · WebView · iOS / Android</p>
 </div>
 
 <div class="phone">
+  <!-- Dynamic Island -->
   <div class="di"><div class="di-spk"></div><div class="di-cam"></div></div>
-  <div class="status">
-    <span class="status-time">9:41</span>
-    <div class="status-icons">
-      <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1A1A1A"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1A1A1A"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1A1A1A"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#1A1A1A" opacity=".3"/></svg>
-      <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.3L15.5 4C13.6 1.9 11 .5 8 .5 5 .5 2.4 1.9.5 4L1.8 5.3C3.3 3.6 5.5 2.5 8 2.5Z" fill="#1A1A1A"/><path d="M8 5.5C9.7 5.5 11.2 6.2 12.3 7.4L13.6 6.1C12.1 4.5 10.2 3.5 8 3.5 5.8 3.5 3.9 4.5 2.4 6.1L3.7 7.4C4.8 6.2 6.3 5.5 8 5.5Z" fill="#1A1A1A"/><circle cx="8" cy="10.5" r="1.5" fill="#1A1A1A"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1A1A1A" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1A1A1A"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.5 24.5 6 24.5 5.5 23.8 4.8 23 4.5Z" fill="#1A1A1A" opacity=".4"/></svg>
-    </div>
-  </div>
 
   <div class="app">
 
-    <!-- HOME -->
-    <div class="screen active" id="s-home">
-      <div class="spcr"></div>
-      <div class="abar">
-        <div class="logo">
-          <div class="lbars"><div class="lbar" style="width:28px;background:#00848F;"></div><div class="lbar" style="width:23px;background:#00843D;"></div><div class="lbar" style="width:18px;background:#1B3A6B;"></div></div>
-          <div class="lwords"><div class="lw1">Standard</div><div class="lw2">Chartered</div></div>
-          <div class="ldiv"></div>
-          <div class="lsub"><div class="lsub1">Invest</div><div class="lsub2">Kenya</div></div>
+    <!-- ══════════════════════════════════
+         SCREEN 1: SPLASH
+    ══════════════════════════════════ -->
+    <div class="screen active" id="s-splash">
+      <div class="status" style="z-index:3;">
+        <span class="status-time" style="color:#fff;">14:36</span>
+        <div class="status-icons">
+          <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" fill="white"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="white"/><rect x="9" y="0" width="3" height="12" rx="1" fill="white"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="white" opacity=".3"/></svg>
+          <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.3L15.5 4C13.6 1.9 11 .5 8 .5 5 .5 2.4 1.9.5 4L1.8 5.3C3.3 3.6 5.5 2.5 8 2.5Z" fill="white"/><path d="M8 5.5C9.7 5.5 11.2 6.2 12.3 7.4L13.6 6.1C12.1 4.5 10.2 3.5 8 3.5 5.8 3.5 3.9 4.5 2.4 6.1L3.7 7.4C4.8 6.2 6.3 5.5 8 5.5Z" fill="white"/><circle cx="8" cy="10.5" r="1.5" fill="white"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="white" stroke-opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.5 24.5 6 24.5 5.5 23.8 4.8 23 4.5Z" fill="white" opacity=".4"/></svg>
         </div>
-        <div class="bar-r"><button class="bico">🔔</button><div class="uav">JM</div></div>
       </div>
-      <div class="scroll">
-        <div class="greeting"><div class="gname">Hello, James 👋</div><div class="gsub">Friday, 27 March 2026 · Nairobi</div></div>
-        <div class="hero">
-          <div class="hlbl">Total Portfolio Value</div>
-          <div class="hamt">KES 847,320</div>
-          <div class="hchg">Today <span class="hbadge">▲ +0.50%</span><span style="color:rgba(255,255,255,.6)">+KES 4,210</span></div>
-          <hr class="hhr">
-          <div class="hstats">
-            <div class="hstat"><div class="hslbl">Invested</div><div class="hsval">KES 780K</div></div>
-            <div class="hstat"><div class="hslbl">Returns</div><div class="hsval">+8.63%</div></div>
-            <div class="hstat"><div class="hslbl">CASA</div><div class="hsval">KES 482K</div></div>
+
+      <div class="splash-bg"></div>
+
+      <div class="splash-top">
+        <div class="splash-bell">🔔</div>
+        <div class="sc-logo-white">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.15)"/>
+            <rect x="6" y="9" width="20" height="3" rx="1.5" fill="#00A550"/>
+            <rect x="6" y="14.5" width="14" height="3" rx="1.5" fill="#0082CA"/>
+            <rect x="6" y="20" width="9" height="3" rx="1.5" fill="#fff" opacity=".8"/>
+          </svg>
+          <div class="sc-logo-text">
+            <div class="sc-lt1">Standard</div>
+            <div class="sc-lt2">Chartered</div>
           </div>
         </div>
-        <div class="qgrid">
-          <div class="qtile" onclick="go('s-discover',1)"><div class="qico">📈</div><div class="qlbl">Markets</div></div>
-          <div class="qtile" onclick="go('s-portfolio',2)"><div class="qico">💼</div><div class="qlbl">Portfolio</div></div>
-          <div class="qtile" onclick="go('s-orders',3)"><div class="qico">📋</div><div class="qlbl">Orders</div></div>
-          <div class="qtile"><div class="qico">💳</div><div class="qlbl">CASA</div></div>
+        <div class="splash-settings">⚙️</div>
+      </div>
+
+      <div style="flex:1;"></div>
+
+      <div class="splash-content">
+        <div class="splash-greeting">Good Afternoon,</div>
+        <div class="splash-name">Savvy Client 👋</div>
+        <button class="splash-login-btn" onclick="go('s-login')">
+          🔒 &nbsp; LOGIN
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         SCREEN 2: LOGIN
+    ══════════════════════════════════ -->
+    <div class="screen" id="s-login">
+      <div class="status">
+        <span class="status-time" style="color:#fff;">14:03</span>
+        <div class="status-icons">
+          <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" fill="white"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="white"/><rect x="9" y="0" width="3" height="12" rx="1" fill="white"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="white" opacity=".3"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="white" stroke-opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/></svg>
         </div>
-        <div class="sechd"><span class="sectit">Markets</span><button class="seclink" onclick="go('s-discover',1)">See all</button></div>
-        <div class="frow" id="hf">
-          <button class="fpill active" onclick="hFilter('NSE',this)">NSE Kenya</button>
-          <button class="fpill" onclick="hFilter('US',this)">US Stocks</button>
-          <button class="fpill">Top Gainers</button>
-          <button class="fpill">Watchlist</button>
+      </div>
+      <div class="spcr"></div>
+
+      <div class="login-wrap">
+        <div class="login-top">
+          <button class="login-close" onclick="go('s-splash')">✕</button>
         </div>
-        <div id="hlist"></div>
-        <div class="sechd" style="margin-top:8px;"><span class="sectit">My Holdings</span><button class="seclink" onclick="go('s-portfolio',2)">View all</button></div>
-        <div id="hholds"></div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:32px;margin-bottom:4px;">
+          <div class="login-title">Login to<br>Mobile Banking</div>
+          <div class="ke-flag">🇰🇪</div>
+        </div>
+
+        <div style="height:1px;background:rgba(255,255,255,.08);margin:20px 0 28px;"></div>
+
+        <div class="login-field">
+          <input class="login-input" type="text" placeholder="Username">
+        </div>
+        <div class="login-field pw-row">
+          <input class="login-input" type="password" placeholder="Password">
+          <button class="forgot-btn">FORGOT?</button>
+        </div>
+
+        <div class="login-btns">
+          <button class="login-submit" onclick="go('s-menu')">LOGIN</button>
+          <div class="login-bio">🫦</div>
+        </div>
+
+        <div class="login-register" style="margin-top:24px;">
+          <div class="lr-label">Have a temporary User ID & Password?</div>
+          <button class="lr-link">Register Here</button>
+        </div>
+      </div>
+
+      <div class="login-alert">
+        <span class="la-icon">⚠️</span>
+        <span class="la-text">Security Alert: "Protect yourself from phishing attempts. Never share your credentials."</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         SCREEN 3: INVESTING MENU
+    ══════════════════════════════════ -->
+    <div class="screen" id="s-menu">
+      <div class="status">
+        <span class="status-time" style="color:#fff;">14:03</span>
+        <div class="status-icons">
+          <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" fill="white"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="white"/><rect x="9" y="0" width="3" height="12" rx="1" fill="white"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="white" stroke-opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/></svg>
+        </div>
+      </div>
+
+      <div class="menu-header">
+        <div class="mh-top">
+          <button class="mh-back" onclick="go('s-login')">←</button>
+          <div class="mh-actions">
+            <button class="mh-btn">Inbox <span style="background:rgba(255,255,255,.3);padding:1px 5px;border-radius:8px;font-size:10px;">NEW</span></button>
+            <button class="mh-btn">⚙️ Settings</button>
+            <button class="mh-btn">Logout</button>
+          </div>
+        </div>
+        <div class="mh-title">Investing</div>
+        <div class="mh-sub">Manage your wealth products</div>
+      </div>
+
+      <div class="menu-last-login">Your last login was 25 Jan 2025, 1:50 PM</div>
+
+      <div class="scroll">
+        <div class="menu-list">
+
+          <div class="menu-item" onclick="void(0)">
+            <div class="mi-ico" style="background:#E8F5E9;">📰</div>
+            <div class="mi-info">
+              <div class="mi-label">Latest Market Insights <span class="mi-ext">↗</span></div>
+              <div class="mi-sub">NSE & global market updates</div>
+            </div>
+            <span class="mi-arrow">›</span>
+          </div>
+
+          <div class="menu-item" onclick="void(0)">
+            <div class="mi-ico" style="background:#E3F2FD;">👤</div>
+            <div class="mi-info">
+              <div class="mi-label">Investment Profile</div>
+              <div class="mi-sub">Risk assessment & preferences</div>
+            </div>
+            <span class="mi-arrow">›</span>
+          </div>
+
+          <div class="menu-item" onclick="void(0)">
+            <div class="mi-ico" style="background:#E8F5E9;">💰</div>
+            <div class="mi-info">
+              <div class="mi-label">SC Shilingi Funds <span class="mi-new">NEW</span></div>
+              <div class="mi-sub">Money market & investment funds</div>
+            </div>
+            <span class="mi-arrow">›</span>
+          </div>
+
+          <div class="menu-item" onclick="void(0)">
+            <div class="mi-ico" style="background:#FFF3E0;">📊</div>
+            <div class="mi-info">
+              <div class="mi-label">Mutual Funds <span class="mi-new">NEW</span></div>
+              <div class="mi-sub">Diversified fund portfolios</div>
+            </div>
+            <span class="mi-arrow">›</span>
+          </div>
+
+          <div class="menu-item" onclick="void(0)">
+            <div class="mi-ico" style="background:#F3E5F5;">🏛️</div>
+            <div class="mi-info">
+              <div class="mi-label">T-Bills & Bonds Trading <span class="mi-new">NEW</span></div>
+              <div class="mi-sub">Government securities</div>
+            </div>
+            <span class="mi-arrow">›</span>
+          </div>
+
+          <!-- TRADING ITEM - highlighted -->
+          <div class="menu-item trading-item" onclick="go('s-trade')">
+            <div class="mi-ico" style="background:var(--teal-lt);">📈</div>
+            <div class="mi-info">
+              <div class="mi-label" style="display:flex;align-items:center;gap:8px;">
+                Trading
+                <span style="background:var(--teal);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px;">NSE + US</span>
+              </div>
+              <div class="mi-sub" style="color:var(--teal);">Buy & sell equities — powered by Vault22</div>
+            </div>
+            <span class="mi-arrow" style="color:var(--teal);">›</span>
+          </div>
+
+        </div>
+
+        <div style="padding:20px 20px 8px;border-top:1px solid #E8EAEB;margin-top:8px;">
+          <div class="menu-item" style="border-top:none;" onclick="void(0)">
+            <div class="mi-ico" style="background:#FCE4EC;">🛡️</div>
+            <div class="mi-info">
+              <div class="mi-label">Insurance</div>
+              <div class="mi-sub">Protect what matters</div>
+            </div>
+            <span class="mi-arrow">›</span>
+          </div>
+          <div class="menu-item" onclick="void(0)">
+            <div class="mi-ico" style="background:#E0F2F1;">🎁</div>
+            <div class="mi-info">
+              <div class="mi-label">View Offers <span class="mi-ext">↗</span></div>
+              <div class="mi-sub">Exclusive deals for SC customers</div>
+            </div>
+            <span class="mi-arrow">›</span>
+          </div>
+        </div>
+
+        <!-- Refer banner -->
+        <div style="margin:12px 16px;background:linear-gradient(135deg,#E0F4F5,#E8F5E9);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A;">Refer Your Family & Friends</div>
+            <div style="font-size:11px;color:var(--txtgrey);margin-top:2px;">You can now refer friends to open an account on SC Mobile.</div>
+            <button style="margin-top:8px;background:none;border:none;color:var(--teal);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;padding:0;">Refer Now →</button>
+          </div>
+          <div style="font-size:36px;">👥</div>
+        </div>
         <div class="pb"></div>
       </div>
     </div>
 
-    <!-- DETAIL -->
+    <!-- ══════════════════════════════════
+         SCREEN 4: TRADING HOME
+    ══════════════════════════════════ -->
+    <div class="screen" id="s-trade">
+      <div class="status">
+        <span class="status-time" style="color:#fff;">9:41</span>
+        <div class="status-icons">
+          <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" fill="white"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="white"/><rect x="9" y="0" width="3" height="12" rx="1" fill="white"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="white" stroke-opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/></svg>
+        </div>
+      </div>
+      <div class="spcr"></div>
+
+      <!-- Top bar -->
+      <div style="background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 18px;display:flex;align-items:center;flex-shrink:0;">
+        <button class="d-back" onclick="go('s-menu')">← Back</button>
+        <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">SC Invest</div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="go('s-portfolio')" style="background:rgba(255,255,255,.08);border:none;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:700;color:rgba(255,255,255,.8);cursor:pointer;font-family:inherit;">Portfolio</button>
+          <button style="background:none;border:none;color:rgba(255,255,255,.6);font-size:16px;cursor:pointer;">🔔</button>
+        </div>
+      </div>
+
+      <!-- Live ticker -->
+      <div class="ticker">
+        <div class="ticker-inner" id="ticker-inner"></div>
+      </div>
+
+      <!-- Market status -->
+      <div class="mkt-bar">
+        <div class="mkt-status">
+          <div class="mkt-dot"></div>
+          <span class="mkt-text">Market closes in 3 hours 48 minutes</span>
+        </div>
+        <div class="mkt-bell">🔔</div>
+      </div>
+
+      <div class="scroll">
+        <!-- Portfolio card -->
+        <div class="port-card">
+          <div class="pc-label">Your Portfolio Value</div>
+          <div class="pc-value">KES 847,320 <span class="pc-eye">👁️</span></div>
+          <div class="pc-change">
+            <span class="pc-badge dn">▼ -2.7%</span>
+            <span class="pc-lost">Value Lost: KES -2.16</span>
+          </div>
+          <div class="pc-orders">
+            <div class="pc-orders-hd"><span>My Orders</span><span>View All</span></div>
+            <div class="pc-order-row">
+              <div class="pc-or-left">
+                <span class="pc-or-sym">EQTY</span>
+                <span class="pc-or-badge">buy</span>
+              </div>
+              <div>
+                <span class="pc-or-val">KES 150.16</span>
+                <span class="pc-or-det"> · 46 shares · 06 Feb, 11:13</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Movers -->
+        <div class="trade-sechd"><span class="trade-sectit">🔥 Top Movers</span><button class="trade-seclink" onclick="setFilter('Gainers',null)">See Gainers</button></div>
+        <div class="movers-scroll" id="movers-row"></div>
+
+        <!-- All Securities -->
+        <div class="trade-sechd" style="margin-top:4px;"><span class="trade-sectit">Available Securities</span></div>
+        <div class="srch-dk">
+          <div class="srch-inner">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><path d="M11 11L14 14" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <input placeholder="What are you looking for today?" oninput="searchSt(this.value)">
+          </div>
+        </div>
+        <div class="filter-tabs" id="filter-tabs">
+          <button class="ftab active" onclick="setFilter('All',this)">All</button>
+          <button class="ftab" onclick="setFilter('Gainers',this)">Gainers</button>
+          <button class="ftab" onclick="setFilter('Losers',this)">Losers</button>
+          <button class="ftab" onclick="setFilter('Volumes',this)">Volumes</button>
+          <button class="ftab" onclick="setFilter('Turnover',this)">Turnover</button>
+          <button class="ftab" onclick="setFilter('US',this)">US Stocks</button>
+        </div>
+        <div id="stock-list"></div>
+        <div class="pb"></div>
+      </div>
+
+      <button class="buy-fab" onclick="openDetail('EQTY')">📈 Buy Stocks</button>
+    </div>
+
+    <!-- ══════════════════════════════════
+         SCREEN 5: STOCK DETAIL
+    ══════════════════════════════════ -->
     <div class="screen" id="s-detail">
-      <div class="spcr"></div>
-      <div class="dtop">
-        <button class="bback" onclick="back()"><svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1L1 7L7 13" stroke="#00848F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>
-        <div style="flex:1"></div>
-        <span class="exbdg" id="d-exch">NSE</span>
-        <div class="liverow"><div class="ldot"></div><span style="font-size:12px;color:var(--txtgrey)">Live</span></div>
+      <div class="status">
+        <span class="status-time" style="color:#fff;">9:41</span>
+        <div class="status-icons">
+          <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="white" stroke-opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/></svg>
+        </div>
       </div>
-      <div class="scroll">
-        <div class="dpc">
-          <div class="dpsym" id="d-sym">EQTY · NSE</div>
-          <div class="dprow"><div class="dppr" id="d-price">KES 42.50</div><div class="dpbdg up" id="d-badge">▲ +3.03%</div></div>
-          <div class="dpmeta"><span id="d-fname">Equity Group Holdings</span><span>·</span><span id="d-cur">KES</span></div>
+      <div class="spcr"></div>
+
+      <div class="dbar">
+        <button class="d-back" onclick="back()">← Back</button>
+        <div style="flex:1"></div>
+        <span class="d-mktbadge" id="d-exch">NSE</span>
+        <div class="d-live" style="margin-left:8px;">
+          <div class="mkt-dot"></div>
+          <span style="font-size:11px;color:rgba(255,255,255,.4);">Live</span>
         </div>
-        <div class="rbar">
-          <button class="rbtn active" onclick="setRange('1D',this)">1D</button>
-          <button class="rbtn" onclick="setRange('1W',this)">1W</button>
-          <button class="rbtn" onclick="setRange('1M',this)">1M</button>
-          <button class="rbtn" onclick="setRange('3M',this)">3M</button>
-          <button class="rbtn" onclick="setRange('1Y',this)">1Y</button>
+      </div>
+
+      <div class="d-price-area">
+        <div class="d-sym" id="d-sym">EQTY · NSE</div>
+        <div style="display:flex;align-items:baseline;gap:0;">
+          <span class="d-price" id="d-price">KES 42.50</span>
+          <span class="d-badge up" id="d-badge">▲ +3.03%</span>
         </div>
-        <div class="cwrap"><div class="cbox"><canvas id="dchart"></canvas></div></div>
-        <div class="stcard">
-          <div style="font-size:15px;font-weight:700;color:var(--black);margin-bottom:12px;">Key Statistics</div>
-          <div class="stgrid">
-            <div class="sti"><span class="stlbl">Open</span><span class="stval" id="ds-o">—</span></div>
-            <div class="sti"><span class="stlbl">Prev Close</span><span class="stval" id="ds-c">—</span></div>
-            <div class="sti"><span class="stlbl">Day High</span><span class="stval" id="ds-h">—</span></div>
-            <div class="sti"><span class="stlbl">Day Low</span><span class="stval" id="ds-l">—</span></div>
-            <div class="sti"><span class="stlbl">Volume</span><span class="stval" id="ds-v">—</span></div>
-            <div class="sti"><span class="stlbl">Mkt Cap</span><span class="stval" id="ds-m">—</span></div>
-            <div class="sti"><span class="stlbl">P/E Ratio</span><span class="stval" id="ds-pe">—</span></div>
-            <div class="sti"><span class="stlbl">52W Range</span><span class="stval" id="ds-52">—</span></div>
+        <div class="d-name" id="d-fname">Equity Group Holdings</div>
+        <div class="d-mktclose">🕐 Market closes in 3 hours 47 minutes</div>
+      </div>
+
+      <!-- Detail tabs -->
+      <div class="dtabs">
+        <button class="dtab active" onclick="setDTab('overview',this)">Overview</button>
+        <button class="dtab" onclick="setDTab('orderbook',this)">Order Book</button>
+        <button class="dtab" onclick="setDTab('corpactions',this)">Corp. Actions</button>
+      </div>
+
+      <div class="scroll" id="d-scroll">
+        <!-- Overview tab -->
+        <div id="dtab-overview">
+          <div class="range-sel">
+            <button class="rbtn active" onclick="setRange('1M',this)">1Mth</button>
+            <button class="rbtn" onclick="setRange('3M',this)">3Mths</button>
+            <button class="rbtn" onclick="setRange('6M',this)">6Mths</button>
+          </div>
+          <div class="chart-wrap-dk"><div class="cbox-dk"><canvas id="dchart"></canvas></div></div>
+
+          <div class="stats-dk">
+            <div class="stats-dk-title">Key Statistics</div>
+            <div class="stats-grid">
+              <div class="stat-row"><span class="stlbl">Open</span><span class="stval" id="ds-o">—</span></div>
+              <div class="stat-row"><span class="stlbl">Prev Close</span><span class="stval" id="ds-c">—</span></div>
+              <div class="stat-row"><span class="stlbl">Day High</span><span class="stval" id="ds-h">—</span></div>
+              <div class="stat-row"><span class="stlbl">Day Low</span><span class="stval" id="ds-l">—</span></div>
+              <div class="stat-row"><span class="stlbl">Volume</span><span class="stval" id="ds-v">—</span></div>
+              <div class="stat-row"><span class="stlbl">Mkt Cap</span><span class="stval" id="ds-m">—</span></div>
+              <div class="stat-row"><span class="stlbl">P/E Ratio</span><span class="stval" id="ds-pe">—</span></div>
+              <div class="stat-row"><span class="stlbl">52W Range</span><span class="stval" id="ds-52">—</span></div>
+            </div>
+          </div>
+
+          <div style="padding:14px 18px;border-top:1px solid rgba(255,255,255,.05);">
+            <div class="stats-dk-title">Description</div>
+            <div id="d-about" style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.65;"></div>
+            <div style="margin-top:6px;font-size:12px;color:var(--teal);cursor:pointer;">... More details</div>
           </div>
         </div>
-        <div class="abtcard"><div class="abttit">About</div><div class="abttxt" id="d-about">—</div></div>
+
+        <!-- Order Book tab -->
+        <div id="dtab-orderbook" style="display:none;padding:16px 18px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#00E676;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;text-align:center;">BID</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.4);display:flex;justify-content:space-between;padding:0 4px;margin-bottom:6px;"><span>Qty</span><span>Price</span></div>
+              ${['42.30 · 1,200','42.10 · 800','41.90 · 2,400','41.75 · 500','41.50 · 3,100'].map(r=>`<div style="display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;"><span style="color:rgba(255,255,255,.5)">${r.split('·')[1].trim()}</span><span style="color:#00E676;font-weight:600">${r.split('·')[0].trim()}</span></div>`).join('')}
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#FF5252;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;text-align:center;">ASK</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.4);display:flex;justify-content:space-between;padding:0 4px;margin-bottom:6px;"><span>Price</span><span>Qty</span></div>
+              ${['42.50 · 900','42.70 · 600','42.90 · 1,800','43.10 · 450','43.30 · 2,200'].map(r=>`<div style="display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;"><span style="color:#FF5252;font-weight:600">${r.split('·')[0].trim()}</span><span style="color:rgba(255,255,255,.5)">${r.split('·')[1].trim()}</span></div>`).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Corp Actions tab -->
+        <div id="dtab-corpactions" style="display:none;padding:16px 18px;">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;">Upcoming Events</div>
+          ${[{t:'Dividend',d:'Ex-Date: 15 Mar 2025',v:'KES 2.50/share',c:'#00E676'},{t:'AGM Notice',d:'Meeting: 28 Mar 2025',v:'Annual General Meeting',c:C='#FFD740'},{t:'Bonus Issue',d:'Record Date: 10 Apr 2025',v:'1:5 ratio',c:'#40C4FF'}].map(e=>`<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;"><div style="width:8px;height:8px;border-radius:50%;background:${e.c};flex-shrink:0;"></div><div style="flex:1;"><div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;">${e.t}</div><div style="font-size:11px;color:rgba(255,255,255,.4);">${e.d}</div></div><div style="font-size:13px;font-weight:700;color:${e.c};">${e.v}</div></div>`).join('')}
+        </div>
+
+        <div class="you-own">
+          <div><div class="yo-lbl">You Own</div><div class="yo-val" id="yo-val">KES 0.00</div><div class="yo-shares" id="yo-shares">0 Shares</div></div>
+          <div class="yo-num" id="yo-num">: 0</div>
+        </div>
         <div class="pb"></div>
       </div>
-      <div class="bsbar">
-        <button class="bsell" onclick="openOrder('sell')">Sell</button>
-        <button class="bbuy" onclick="openOrder('buy')">Buy</button>
+
+      <div class="bs-bar">
+        <button class="btn-sell-dk" onclick="openOrder('sell')">Sell</button>
+        <button class="btn-buy-dk" onclick="openOrder('buy')">Buy</button>
       </div>
     </div>
 
-    <!-- ORDER -->
+    <!-- ══════════════════════════════════
+         SCREEN 6: ORDER
+    ══════════════════════════════════ -->
     <div class="screen" id="s-order">
+      <div class="status"><span class="status-time" style="color:#fff;">9:41</span></div>
       <div class="spcr"></div>
-      <div class="abar">
-        <button class="bback" onclick="back()"><svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1L1 7L7 13" stroke="#00848F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="o-title">Buy EQTY</span></button>
-        <div style="flex:1"></div>
-        <span id="o-exch" style="font-size:12px;font-weight:600;color:var(--txtgrey);background:var(--ltgrey);padding:3px 10px;border-radius:20px;">NSE</span>
+
+      <div class="obar">
+        <button class="d-back" onclick="back()">←</button>
+        <span class="obar-title" id="o-title">Buy EQTY</span>
+        <span id="o-exch" style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);padding:3px 10px;border-radius:20px;">NSE</span>
       </div>
+
+      <div class="o-stock-strip">
+        <div class="oss-left">
+          <div class="sym" id="o-sym">EQTY</div>
+          <div class="name" id="o-name">Equity Group Holdings</div>
+        </div>
+        <div class="oss-right">
+          <div class="oss-price" id="o-price">KES 42.50</div>
+          <div class="sch-dk up" id="o-chg" style="text-align:right;font-size:12px;">▲ +3.03%</div>
+        </div>
+      </div>
+
+      <div class="o-seg">
+        <button class="oseg-btn buy active" id="seg-buy" onclick="setOT('buy')">Buy</button>
+        <button class="oseg-btn sell" id="seg-sell" onclick="setOT('sell')">Sell</button>
+      </div>
+
       <div class="scroll">
-        <div class="sstrip">
-          <div><div class="sssym" id="o-sym">EQTY</div><div class="ssnm" id="o-name">Equity Group Holdings</div></div>
-          <div><div class="ssprice" id="o-price">KES 42.50</div><div class="sch up" id="o-chg" style="text-align:right;font-size:13px;">▲ +3.03%</div></div>
-        </div>
-        <div class="seg">
-          <button class="segb buy active" id="sb" onclick="setOT('buy')">Buy</button>
-          <button class="segb sell" id="ss" onclick="setOT('sell')">Sell</button>
-        </div>
-        <div class="cwrap2">
-          <div class="clbl">Pay from</div>
-          <div class="ccard">
-            <div class="cico"><div class="cicobars"><div class="cicobar" style="width:18px;height:2.5px;background:#00848F;"></div><div class="cicobar" style="width:14px;height:2.5px;background:#00843D;"></div><div class="cicobar" style="width:10px;height:2.5px;background:#1B3A6B;"></div></div></div>
-            <div class="cinf"><div class="cnm">SC Current Account</div><div class="cnum">••• ••• 4821</div></div>
-            <div class="cright"><div class="cbal" id="o-bal">KES 482,000</div><div class="cavail">Available</div></div>
-            <span class="carr">›</span>
+        <div class="casa-dk">
+          <div class="casa-dk-lbl">Pay from</div>
+          <div class="casa-dk-card">
+            <div class="casa-ico-dk">
+              <div class="casa-bars"><div class="cb1"></div><div class="cb2"></div><div class="cb3"></div></div>
+            </div>
+            <div class="casa-inf">
+              <div class="casa-nm">SC Current Account</div>
+              <div class="casa-num">••• ••• 4821</div>
+            </div>
+            <div class="casa-rt">
+              <div class="casa-bal-dk" id="o-bal">KES 482,000</div>
+              <div class="casa-av">Available</div>
+            </div>
+            <span class="casa-arr">›</span>
           </div>
         </div>
-        <div class="fwrap">
-          <div class="fg"><label class="fl">Order Type</label><div class="selwrap"><select class="fi" id="o-type" onchange="calcO()"><option value="market">Market Order</option><option value="limit">Limit Order</option><option value="stop">Stop Order</option></select></div></div>
-          <div class="fg" id="lfg" style="display:none"><label class="fl">Limit Price</label><input class="fi" type="number" id="o-lim" placeholder="Enter price" oninput="calcO()" inputmode="decimal"></div>
-          <div class="fg"><label class="fl">Quantity (Shares)</label><input class="fi" type="number" id="o-qty" value="100" min="1" oninput="calcO()" inputmode="numeric"></div>
+
+        <div class="form-dk">
+          <div class="fdg">
+            <label class="fdl">Order Type</label>
+            <div class="selwrap">
+              <select class="fdi" id="o-type" onchange="calcO()">
+                <option value="market">Market Order</option>
+                <option value="limit">Limit Order</option>
+                <option value="stop">Stop Order</option>
+              </select>
+            </div>
+          </div>
+          <div class="fdg" id="lfg" style="display:none;">
+            <label class="fdl">Limit Price (KES)</label>
+            <input class="fdi" type="number" id="o-lim" placeholder="Enter limit price" oninput="calcO()" inputmode="decimal">
+          </div>
+          <div class="fdg">
+            <label class="fdl">Number of Shares</label>
+            <input class="fdi" type="number" id="o-qty" value="100" min="1" oninput="calcO()" inputmode="numeric">
+          </div>
         </div>
-        <div class="sumcard">
-          <div class="sumrow"><span class="sumlbl">Price per share</span><span class="sumval" id="sp">KES 42.50</span></div>
-          <div class="sumrow"><span class="sumlbl">Quantity</span><span class="sumval" id="sq">100 shares</span></div>
-          <div class="sumrow"><span class="sumlbl">Brokerage (0.12%)</span><span class="sumval" id="sb2">KES 5.10</span></div>
-          <div class="sumrow"><span class="sumlbl">Stamp Duty (0.1%)</span><span class="sumval" id="sst">KES 4.25</span></div>
-          <div class="sumrow" style="background:rgba(0,132,143,.06)"><span class="sumlbl" style="font-weight:700;color:var(--dkgrey)">Total Debit</span><span class="sumtot" id="stot">KES 4,259.35</span></div>
+
+        <!-- Trade Summary -->
+        <div style="margin:0 16px 4px;font-size:12px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;">Trade Summary</div>
+        <div class="sum-dk">
+          <div class="sumr-dk"><span class="suml-dk">Cost</span><span class="sumv-dk" id="sp">KES 4,250.00</span></div>
+          <div class="sumr-dk"><span class="suml-dk">Charges</span><span class="sumv-dk" id="s-charges">KES 9.35 ▲</span></div>
+          <div class="charges-detail">
+            <div class="cd-row"><span class="cdl">Brokerage commission</span><span class="cdv" id="c-brok">KES 5.10</span></div>
+            <div class="cd-row"><span class="cdl">CMA trans. levy</span><span class="cdv" id="c-cma">KES 0.85</span></div>
+            <div class="cd-row"><span class="cdl">NSE trans. levy</span><span class="cdv" id="c-nse">KES 0.85</span></div>
+            <div class="cd-row"><span class="cdl">Stamp duty</span><span class="cdv" id="c-stamp">KES 2.55</span></div>
+          </div>
+          <div class="sumr-dk" style="background:rgba(0,132,143,.08);">
+            <span class="suml-dk" style="font-weight:700;color:rgba(255,255,255,.7);">Total Cost of Shares</span>
+            <span class="sumtot-dk" id="s-total">KES 4,259.35</span>
+          </div>
         </div>
-        <div class="ctawrap"><button class="ctabtn" id="ctab" onclick="openSheet()">Review Order</button></div>
-        <div class="pwby"><span class="v22">V22</span> Powered by Vault22 · <span style="color:var(--midgrey)">Market Execution</span></div>
+
+        <div class="cta-dk">
+          <button class="ctab-dk" id="ctab" onclick="openSheet()">Review Buy Order</button>
+        </div>
+        <div class="powered"><span class="v22tag">V22</span> Powered by Vault22 · Market Execution</div>
         <div class="pb"></div>
       </div>
     </div>
 
-    <!-- PORTFOLIO -->
+    <!-- ══════════════════════════════════
+         SCREEN 7: PORTFOLIO
+    ══════════════════════════════════ -->
     <div class="screen" id="s-portfolio">
+      <div class="status"><span class="status-time" style="color:#fff;">9:41</span></div>
       <div class="spcr"></div>
-      <div class="abar">
-        <div class="logo"><div class="lbars"><div class="lbar" style="width:22px;background:#00848F;"></div><div class="lbar" style="width:18px;background:#00843D;"></div><div class="lbar" style="width:14px;background:#1B3A6B;"></div></div><div class="lwords"><div class="lw1" style="font-size:11px;">Standard</div><div class="lw2" style="font-size:11px;">Chartered</div></div></div>
-        <div style="flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--black);">Portfolio</div>
-        <button class="bico">⚙️</button>
-      </div>
-      <div class="scroll">
-        <div class="phero"><div class="phlbl">Total Portfolio Value</div><div class="phval">KES 847,320</div><div class="phsub">Today ▲ KES 4,210 (+0.50%)</div></div>
-        <div class="pmets">
-          <div class="pmet"><div class="pmlbl">Total Invested</div><div class="pmval">KES 780K</div></div>
-          <div class="pmet"><div class="pmlbl">Total Returns</div><div class="pmval pos">+KES 67.3K</div></div>
-          <div class="pmet"><div class="pmlbl">Return %</div><div class="pmval pos">+8.63%</div></div>
-          <div class="pmet"><div class="pmlbl">Day P&amp;L</div><div class="pmval pos">+KES 4,210</div></div>
-        </div>
-        <div class="sechd"><span class="sectit">Holdings</span><span style="font-size:13px;color:var(--txtgrey)">NSE + US</span></div>
-        <div id="plist"></div>
-        <div class="pb"></div>
-      </div>
-    </div>
 
-    <!-- ORDERS -->
-    <div class="screen" id="s-orders">
-      <div class="spcr"></div>
-      <div class="abar">
-        <div class="logo"><div class="lbars"><div class="lbar" style="width:22px;background:#00848F;"></div><div class="lbar" style="width:18px;background:#00843D;"></div><div class="lbar" style="width:14px;background:#1B3A6B;"></div></div><div class="lwords"><div class="lw1" style="font-size:11px;">Standard</div><div class="lw2" style="font-size:11px;">Chartered</div></div></div>
-        <div style="flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--black);">Orders</div>
-        <div style="width:34px"></div>
+      <div style="background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 18px;display:flex;align-items:center;flex-shrink:0;">
+        <button class="d-back" onclick="go('s-trade')">← Back</button>
+        <div style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#fff;">Portfolio</div>
+        <button style="background:none;border:none;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;">Performance ›</button>
       </div>
-      <div class="scroll">
-        <div style="padding:40px 20px;text-align:center;">
-          <div style="font-size:48px;margin-bottom:16px;">📋</div>
-          <div style="font-size:17px;font-weight:700;color:var(--black);margin-bottom:8px;">No orders yet</div>
-          <div style="font-size:14px;color:var(--txtgrey);margin-bottom:24px;">Your order history will appear here once you start trading.</div>
-          <button onclick="go('s-discover',1)" style="background:var(--teal);color:#fff;border:none;border-radius:var(--r);padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;">Browse Stocks</button>
-        </div>
-      </div>
-    </div>
 
-    <!-- DISCOVER -->
-    <div class="screen" id="s-discover">
-      <div class="spcr"></div>
-      <div class="abar">
-        <div class="logo"><div class="lbars"><div class="lbar" style="width:22px;background:#00848F;"></div><div class="lbar" style="width:18px;background:#00843D;"></div><div class="lbar" style="width:14px;background:#1B3A6B;"></div></div><div class="lwords"><div class="lw1" style="font-size:11px;">Standard</div><div class="lw2" style="font-size:11px;">Chartered</div></div></div>
-        <div style="flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--black);">Markets</div>
-        <button class="bico">🔔</button>
-      </div>
       <div class="scroll">
-        <div class="srchw"><div class="srchb"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#6B7273" stroke-width="1.5"/><path d="M11 11L14 14" stroke="#6B7273" stroke-width="1.5" stroke-linecap="round"/></svg><input placeholder="Search stocks, ETFs…" oninput="srch(this.value)"></div></div>
-        <div class="sechd"><span class="sectit">Top Movers</span></div>
-        <div class="mvrs" id="mvrs"></div>
-        <div class="sechd" style="margin-top:8px;">
-          <span class="sectit">All Stocks</span>
-          <div style="display:flex;gap:6px;" id="df">
-            <button class="fpill active" style="font-size:12px;padding:4px 10px" onclick="dfilt('ALL',this)">All</button>
-            <button class="fpill" style="font-size:12px;padding:4px 10px" onclick="dfilt('NSE',this)">NSE</button>
-            <button class="fpill" style="font-size:12px;padding:4px 10px" onclick="dfilt('US',this)">US</button>
+        <div class="port-hero">
+          <div class="ph-tabs">
+            <button class="ph-tab active">Portfolio</button>
+            <button class="ph-tab">Performance</button>
+          </div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:6px;">Press on a section of the graph to view your portfolio breakdown</div>
+          <div class="donut-wrap">
+            <div class="donut-center">
+              <canvas id="donutChart" width="140" height="140"></canvas>
+              <div class="donut-text">
+                <div class="dt-label">Portfolio Value</div>
+                <div class="dt-val">KES 847K</div>
+                <div class="dt-chg dn">-2.03%(-1.62)</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.6);">
+              <div style="width:10px;height:10px;border-radius:2px;background:#FFC107;"></div> EQTY (38.5%)
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.6);">
+              <div style="width:10px;height:10px;border-radius:2px;background:#00E676;"></div> SCOM (29.2%)
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.6);">
+              <div style="width:10px;height:10px;border-radius:2px;background:#40C4FF;"></div> AAPL (20.8%)
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.6);">
+              <div style="width:10px;height:10px;border-radius:2px;background:#FF5252;"></div> Other (11.5%)
+            </div>
           </div>
         </div>
-        <div id="dlist"></div>
+
+        <div class="port-metrics">
+          <div class="pmet"><div class="pm-lbl">Invested</div><div class="pm-val">KES 780K</div></div>
+          <div class="pmet"><div class="pm-lbl">Returns</div><div class="pm-val pos">+KES 67.3K</div></div>
+          <div class="pmet"><div class="pm-lbl">Return %</div><div class="pm-val pos">+8.63%</div></div>
+          <div class="pmet"><div class="pm-lbl">Day P&L</div><div class="pm-val neg">-KES 2.16</div></div>
+        </div>
+
+        <div style="padding:6px 18px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;font-weight:700;color:#fff;">Holdings</span>
+          <span style="font-size:11px;color:var(--teal);">NSE + US</span>
+        </div>
+        <div id="port-list"></div>
         <div class="pb"></div>
       </div>
     </div>
 
-    <!-- BOTTOM NAV — single instance, outside all screens -->
+    <!-- SHARED BOTTOM NAV -->
     <nav id="bnav">
-      <button class="nb active" id="n0" onclick="go('s-home',0)"><span class="nb-ico">🏠</span><span class="nb-lbl">Home</span><div class="nb-dot"></div></button>
-      <button class="nb" id="n1" onclick="go('s-discover',1)"><span class="nb-ico">📊</span><span class="nb-lbl">Markets</span><div class="nb-dot"></div></button>
-      <button class="nb" id="n2" onclick="go('s-portfolio',2)"><span class="nb-ico">💼</span><span class="nb-lbl">Portfolio</span><div class="nb-dot"></div></button>
-      <button class="nb" id="n3" onclick="go('s-orders',3)"><span class="nb-ico">📋</span><span class="nb-lbl">Orders</span><div class="nb-dot"></div></button>
-      <button class="nb" id="n4"><span class="nb-ico">👤</span><span class="nb-lbl">Profile</span><div class="nb-dot"></div></button>
+      <button class="nb active" id="n0" onclick="go('s-trade')"><span class="nb-ico">🏠</span><span class="nb-lbl">Home</span><div class="nb-dot"></div></button>
+      <button class="nb" id="n1" onclick="go('s-trade')"><span class="nb-ico">📊</span><span class="nb-lbl">Trade</span><div class="nb-dot"></div></button>
+      <button class="nb" id="n2" onclick="go('s-portfolio')"><span class="nb-ico">💼</span><span class="nb-lbl">Portfolio</span><div class="nb-dot"></div></button>
+      <button class="nb" id="n3"><span class="nb-ico">👤</span><span class="nb-lbl">Account</span><div class="nb-dot"></div></button>
     </nav>
 
-    <!-- CONFIRM SHEET — single instance -->
-    <div class="overlay" id="ovl" onclick="if(event.target===this)closeSheet()">
-      <div class="sheet"><div class="shdl"></div><div id="shbody"></div></div>
+    <!-- CONFIRM SHEET -->
+    <div class="ovl" id="ovl" onclick="if(event.target===this)closeSheet()">
+      <div class="sheet"><div class="sh-handle"></div><div id="sh-body"></div></div>
     </div>
 
-  </div>
-</div>
+  </div><!-- /app -->
+</div><!-- /phone -->
 
 <script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
 const ST=[
-  {sym:'EQTY',name:'Equity Group Holdings',price:42.50,chg:1.25,pct:3.03,cur:'KES',mkt:'NSE',open:41.00,high:43.20,low:40.80,vol:'8.4M',cap:'KES 161B',pe:'9.2x',hi52:58.0,lo52:36.0,about:"Equity Group Holdings is Kenya's largest bank by customer base with over 15 million accounts across East and Central Africa, offering retail, corporate, and investment banking services."},
-  {sym:'SCOM',name:'Safaricom PLC',price:18.65,chg:-0.35,pct:-1.84,cur:'KES',mkt:'NSE',open:19.00,high:19.15,low:18.40,vol:'22.1M',cap:'KES 745B',pe:'17.5x',hi52:28.5,lo52:15.0,about:"Safaricom is East Africa's leading telecoms company, renowned for M-Pesa mobile money. It generates over KES 300 billion in annual revenue and is the most traded counter on the NSE."},
-  {sym:'KCB',name:'KCB Group',price:36.10,chg:0.60,pct:1.69,cur:'KES',mkt:'NSE',open:35.50,high:36.50,low:35.30,vol:'4.2M',cap:'KES 116B',pe:'7.8x',hi52:42.0,lo52:29.0,about:"KCB Group is one of the largest commercial banks in East Africa with operations across Kenya, Uganda, Tanzania, Rwanda, and South Sudan."},
-  {sym:'EABL',name:'East African Breweries',price:125.00,chg:2.25,pct:1.83,cur:'KES',mkt:'NSE',open:122.75,high:126.0,low:122.0,vol:'1.1M',cap:'KES 100B',pe:'22.1x',hi52:168.0,lo52:112.0,about:"EABL is East Africa's leading beverages business, producing Tusker, Guinness, and Senator Keg. 50% owned by Diageo plc."},
-  {sym:'COOP',name:'Co-operative Bank',price:13.80,chg:-0.20,pct:-1.43,cur:'KES',mkt:'NSE',open:14.00,high:14.10,low:13.70,vol:'6.5M',cap:'KES 81B',pe:'6.1x',hi52:15.5,lo52:11.0,about:"Co-operative Bank of Kenya serves the co-operative movement and general public, with the third-largest branch network in Kenya."},
-  {sym:'NCBA',name:'NCBA Group',price:29.45,chg:0.45,pct:1.55,cur:'KES',mkt:'NSE',open:29.00,high:29.80,low:28.90,vol:'2.8M',cap:'KES 48B',pe:'8.4x',hi52:38.0,lo52:26.0,about:"NCBA Group formed from the merger of NIC Bank and Commercial Bank of Africa, known for M-Shwari digital lending."},
-  {sym:'AAPL',name:'Apple Inc.',price:189.30,chg:1.45,pct:0.77,cur:'USD',mkt:'US',open:187.85,high:190.10,low:187.20,vol:'58.3M',cap:'$2.93T',pe:'30.2x',hi52:199.6,lo52:164.1,about:"Apple designs and sells iPhones, Macs, iPads, Apple Watch, and AirPods. Services including the App Store and Apple Pay generate over $85B annually."},
-  {sym:'MSFT',name:'Microsoft Corp.',price:415.20,chg:3.80,pct:0.92,cur:'USD',mkt:'US',open:411.40,high:416.90,low:410.80,vol:'21.7M',cap:'$3.09T',pe:'36.8x',hi52:430.8,lo52:309.4,about:"Microsoft powers digital transformation through Windows, Azure cloud, Office 365, LinkedIn, and Xbox."},
-  {sym:'AMZN',name:'Amazon.com Inc.',price:186.50,chg:-2.10,pct:-1.11,cur:'USD',mkt:'US',open:188.60,high:189.30,low:185.80,vol:'34.1M',cap:'$1.96T',pe:'60.4x',hi52:201.2,lo52:118.4,about:"Amazon leads global e-commerce and cloud computing. AWS is the world's largest cloud platform."},
-  {sym:'TSLA',name:'Tesla Inc.',price:248.50,chg:-4.20,pct:-1.66,cur:'USD',mkt:'US',open:252.70,high:253.90,low:246.10,vol:'112.5M',cap:'$793B',pe:'85.3x',hi52:299.3,lo52:138.8,about:"Tesla designs and sells electric vehicles and energy storage. Autopilot and FSD place Tesla at the frontier of autonomous driving."}
+  {sym:'EQTY',name:'Equity Group Holdings',price:42.50,chg:1.25,pct:3.03,vol:'8.4M',cap:'KES 161B',pe:'9.2x',hi52:58,lo52:36,open:41.00,high:43.20,low:40.80,mkt:'NSE',cur:'KES',about:"Kenya's largest bank by customer base with over 15 million accounts across East and Central Africa."},
+  {sym:'SCOM',name:'Safaricom PLC',price:18.65,chg:-0.35,pct:-1.84,vol:'22.1M',cap:'KES 745B',pe:'17.5x',hi52:28.5,lo52:15,open:19.00,high:19.15,low:18.40,mkt:'NSE',cur:'KES',about:"East Africa's leading telecoms company, renowned for M-Pesa mobile money."},
+  {sym:'KCB',name:'KCB Group',price:36.10,chg:0.60,pct:1.69,vol:'4.2M',cap:'KES 116B',pe:'7.8x',hi52:42,lo52:29,open:35.50,high:36.50,low:35.30,mkt:'NSE',cur:'KES',about:"One of the largest commercial banks in East Africa."},
+  {sym:'EABL',name:'East African Breweries',price:125.00,chg:2.25,pct:1.83,vol:'1.1M',cap:'KES 100B',pe:'22.1x',hi52:168,lo52:112,open:122.75,high:126.0,low:122.0,mkt:'NSE',cur:'KES',about:"East Africa's leading beverages business producing Tusker, Guinness, and Senator Keg."},
+  {sym:'COOP',name:'Co-operative Bank',price:13.80,chg:-0.20,pct:-1.43,vol:'6.5M',cap:'KES 81B',pe:'6.1x',hi52:15.5,lo52:11,open:14.00,high:14.10,low:13.70,mkt:'NSE',cur:'KES',about:"Co-operative Bank of Kenya with the third-largest branch network in Kenya."},
+  {sym:'NBV',name:'Nairobi Business Ventures',price:1.46,chg:0.04,pct:2.82,vol:'12.3M',cap:'KES 2.1B',pe:'—',hi52:2.10,lo52:1.20,open:1.42,high:1.52,low:1.40,mkt:'NSE',cur:'KES',about:"Small-cap listed company on the Nairobi Securities Exchange."},
+  {sym:'ABSA',name:'ABSA Bank Kenya Plc',price:28.20,chg:0.00,pct:0.00,vol:'3.2M',cap:'KES 52B',pe:'8.1x',hi52:32.0,lo52:24.5,open:28.20,high:28.50,low:27.90,mkt:'NSE',cur:'KES',about:"ABSA Bank Kenya is a subsidiary of Absa Group, one of Africa's largest diversified financial services."},
+  {sym:'AAPL',name:'Apple Inc.',price:189.30,chg:1.45,pct:0.77,vol:'58.3M',cap:'$2.93T',pe:'30.2x',hi52:199.6,lo52:164.1,open:187.85,high:190.10,low:187.20,mkt:'US',cur:'USD',about:"Apple designs and sells iPhones, Macs, iPads, and Apple Watch."},
+  {sym:'MSFT',name:'Microsoft Corp.',price:415.20,chg:3.80,pct:0.92,vol:'21.7M',cap:'$3.09T',pe:'36.8x',hi52:430.8,lo52:309.4,open:411.40,high:416.90,low:410.80,mkt:'US',cur:'USD',about:"Microsoft powers digital transformation through Windows, Azure cloud, and Office 365."},
+  {sym:'TSLA',name:'Tesla Inc.',price:248.50,chg:-4.20,pct:-1.66,vol:'112.5M',cap:'$793B',pe:'85.3x',hi52:299.3,lo52:138.8,open:252.70,high:253.90,low:246.10,mkt:'US',cur:'USD',about:"Tesla designs and sells electric vehicles and energy storage solutions."},
 ];
-const HLD=[{sym:'EQTY',qty:500,avg:38.50},{sym:'SCOM',qty:1000,avg:20.10},{sym:'AAPL',qty:10,avg:175.00},{sym:'KCB',qty:200,avg:34.00}];
-const IC=[{bg:'#E0F4F5',c:'#00848F'},{bg:'#FFF3E0',c:'#E65C00'},{bg:'#EAF4E8',c:'#2E7D32'},{bg:'#EEF2FF',c:'#4338CA'},{bg:'#FCE4EC',c:'#C2185B'},{bg:'#E8F5E9',c:'#388E3C'},{bg:'#F3E5F5',c:'#7B1FA2'},{bg:'#E1F5FE',c:'#0288D1'},{bg:'#FFF8E1',c:'#F57F17'},{bg:'#FFEBEE',c:'#C62828'}];
 
-let cur='s-home',prev='s-home',stock=ST[0],ot='buy',chart=null,rng='1D',hm='NSE';
+const HOLDS=[
+  {sym:'EQTY',qty:500,avg:38.50},
+  {sym:'SCOM',qty:1000,avg:20.10},
+  {sym:'AAPL',qty:10,avg:175.00},
+  {sym:'KCB',qty:200,avg:34.00},
+];
 
-function ic(sym){return IC[ST.findIndex(s=>s.sym===sym)%IC.length];}
-function px(s){return s.cur==='USD'?'$':'KES ';}
+const IC=[
+  {bg:'#1A3347',c:'#00C8D7'},{bg:'#1F3020',c:'#00E676'},{bg:'#1E1A30',c:'#B39DDB'},
+  {bg:'#2D1A1A',c:'#FF7043'},{bg:'#1A2B1A',c:'#66BB6A'},{bg:'#2A2010',c:'#FFC107'},
+  {bg:'#1A2535',c:'#42A5F5'},{bg:'#261A2D',c:'#CE93D8'},{bg:'#1A2530',c:'#29B6F6'},
+  {bg:'#2D1A20',c:'#EF5350'},
+];
 
-function go(id,ni){
-  if(cur!==id){prev=cur;show(id);}
-  if(ni!==undefined)setNav(ni);
-}
-function back(){
-  var t=cur==='s-order'?'s-detail':prev||'s-home';
-  show(t);
-  var m={'s-home':0,'s-discover':1,'s-portfolio':2,'s-orders':3};
-  if(m[t]!==undefined)setNav(m[t]);
-}
-function show(id){
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let cur='s-splash', prev='s-splash', stock=ST[0], ot='buy', chart=null, rng='1M';
+
+// ─── NAV ────────────────────────────────────────────────────────────────────
+function go(id, navIdx) {
+  prev = cur;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  var el=document.getElementById(id);
-  if(el){el.classList.add('active');var sc=el.querySelector('.scroll');if(sc)sc.scrollTop=0;}
-  cur=id;
-  var hide=id==='s-detail'||id==='s-order';
-  document.getElementById('bnav').style.display=hide?'none':'flex';
+  const el = document.getElementById(id);
+  if(el){ el.classList.add('active'); const sc=el.querySelector('.scroll'); if(sc) sc.scrollTop=0; }
+  cur = id;
+  const noNav = ['s-splash','s-login','s-menu','s-detail','s-order'].includes(id);
+  document.getElementById('bnav').style.display = noNav ? 'none' : 'flex';
+  if(navIdx!==undefined) setNav(navIdx);
+  if(id==='s-portfolio') { drawDonut(); renderPort(); }
+  if(id==='s-trade') setNav(0);
 }
-function setNav(i){document.querySelectorAll('.nb').forEach((b,j)=>b.classList.toggle('active',i===j));}
+function back() {
+  const map = {'s-order':'s-detail','s-detail':'s-trade','s-portfolio':'s-trade'};
+  go(map[cur]||'s-trade');
+}
+function setNav(i){ document.querySelectorAll('.nb').forEach((b,j)=>b.classList.toggle('active',i===j)); }
 
-function srow(s){
-  var ic2=ic(s.sym),up=s.chg>=0,p=px(s);
-  return '<div class="srow" onclick="openD(\''+s.sym+'\')">'
-    +'<div class="sico" style="background:'+ic2.bg+';color:'+ic2.c+'">'+s.sym.slice(0,2)+'</div>'
-    +'<div class="sinf"><div class="ssym">'+s.sym+'</div><div class="snm">'+s.name+'</div></div>'
-    +'<div class="spc"><div class="spr">'+p+s.price.toFixed(2)+'</div>'
-    +'<div class="sch '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+Math.abs(s.pct).toFixed(2)+'%</div></div>'
-    +'</div>';
+// ─── TICKER ─────────────────────────────────────────────────────────────────
+function buildTicker() {
+  const ticks = [...ST,...ST]; // duplicate for seamless loop
+  const html = ticks.map(s => {
+    const up = s.chg >= 0;
+    return `<div class="tick-item">
+      <span class="tick-sym">${s.sym}</span>
+      <span class="tick-price">${s.cur==='USD'?'$':''}${s.price.toFixed(2)}</span>
+      <span class="tick-chg ${up?'up':'dn'}">${up?'▲':'▼'}${Math.abs(s.pct).toFixed(2)}%</span>
+    </div>`;
+  }).join('');
+  document.getElementById('ticker-inner').innerHTML = html;
 }
 
-// HOME
-function hFilter(m,btn){hm=m;document.querySelectorAll('#hf .fpill').forEach(p=>p.classList.remove('active'));btn.classList.add('active');renderHL();}
-function renderHL(){document.getElementById('hlist').innerHTML=ST.filter(s=>s.mkt===hm).map(srow).join('');}
-function renderHH(){
-  document.getElementById('hholds').innerHTML=HLD.slice(0,3).map(h=>{
-    var s=ST.find(x=>x.sym===h.sym);if(!s)return'';
-    var ic2=ic(s.sym),val=s.price*h.qty,pl=(s.price-h.avg)*h.qty,pct=((s.price-h.avg)/h.avg*100).toFixed(1),up=pl>=0,p=px(s);
-    return '<div class="hrow" onclick="openD(\''+s.sym+'\')">'
-      +'<div class="hico" style="background:'+ic2.bg+';color:'+ic2.c+'">'+s.sym.slice(0,2)+'</div>'
-      +'<div class="hinf"><div class="hsym">'+s.sym+'</div><div class="hdet">'+h.qty+' shares · avg '+p+h.avg.toFixed(2)+'</div></div>'
-      +'<div class="hrgt"><div class="hval">'+p+val.toFixed(0)+'</div><div class="hpl '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+pct+'%</div></div>'
-      +'</div>';
+// ─── MOVERS ─────────────────────────────────────────────────────────────────
+function buildMovers() {
+  const sorted = [...ST].sort((a,b)=>Math.abs(b.pct)-Math.abs(a.pct)).slice(0,5);
+  document.getElementById('movers-row').innerHTML = sorted.map(s => {
+    const up=s.chg>=0, ic=IC[ST.indexOf(s)%IC.length];
+    return `<div class="mover-card" onclick="openDetail('${s.sym}')">
+      <div class="mc-name">${s.sym}</div>
+      <div class="mc-full">${s.name}</div>
+      <div class="mc-price">${s.cur==='USD'?'$':'KES '}${s.price.toFixed(2)}</div>
+      <div class="mc-chg ${up?'up':'dn'}">${up?'▲ +':'▼ '}${Math.abs(s.pct).toFixed(2)}%</div>
+    </div>`;
   }).join('');
 }
 
-// DETAIL
-function openD(sym){
-  stock=ST.find(s=>s.sym===sym);var s=stock,up=s.chg>=0,p=px(s);
+// ─── STOCK LIST ─────────────────────────────────────────────────────────────
+function ic(sym){ return IC[ST.findIndex(s=>s.sym===sym)%IC.length]; }
+function srow(s){
+  const up=s.chg>=0, c=ic(s.sym), p=s.cur==='USD'?'$':'KES ';
+  return `<div class="srow-dk" onclick="openDetail('${s.sym}')">
+    <div class="sico-dk" style="background:${c.bg};color:${c.c}">${s.sym.slice(0,2)}</div>
+    <div class="sinf-dk"><div class="ssym-dk">${s.sym}</div><div class="snm-dk">${s.name}</div></div>
+    <div class="spc-dk">
+      <div class="spr-dk">${p}${s.price.toFixed(2)}</div>
+      <div class="sch-dk ${up?'up':'dn'}">${up?'▲ +':'▼ '}${Math.abs(s.pct).toFixed(2)}%</div>
+    </div>
+  </div>`;
+}
+function renderSL(list){ document.getElementById('stock-list').innerHTML=(list||ST).map(srow).join(''); }
+function setFilter(f, btn){
+  if(btn){ document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); }
+  let list = f==='Gainers'?[...ST].filter(s=>s.chg>0).sort((a,b)=>b.pct-a.pct)
+    :f==='Losers'?[...ST].filter(s=>s.chg<0).sort((a,b)=>a.pct-b.pct)
+    :f==='Volumes'?[...ST].sort((a,b)=>parseFloat(b.vol)-parseFloat(a.vol))
+    :f==='Turnover'?[...ST].sort((a,b)=>b.price*parseFloat(b.vol)-a.price*parseFloat(a.vol))
+    :f==='US'?ST.filter(s=>s.mkt==='US')
+    :ST;
+  renderSL(list);
+}
+function searchSt(q){ const qq=q.toLowerCase(); renderSL(qq?ST.filter(s=>s.sym.toLowerCase().includes(qq)||s.name.toLowerCase().includes(qq)):ST); }
+
+// ─── DETAIL ──────────────────────────────────────────────────────────────────
+function openDetail(sym){
+  stock = ST.find(s=>s.sym===sym); const s=stock, up=s.chg>=0, p=s.cur==='USD'?'$':'KES ';
   document.getElementById('d-exch').textContent=s.mkt;
   document.getElementById('d-sym').textContent=s.sym+' · '+s.mkt;
   document.getElementById('d-fname').textContent=s.name;
-  document.getElementById('d-cur').textContent=s.cur;
   document.getElementById('d-price').textContent=p+s.price.toFixed(2);
   document.getElementById('d-about').textContent=s.about;
-  var b=document.getElementById('d-badge');b.className='dpbdg '+(up?'up':'dn');b.textContent=(up?'▲ +':'▼ ')+Math.abs(s.pct).toFixed(2)+'%';
+  const b=document.getElementById('d-badge');
+  b.className='d-badge '+(up?'up':'dn');
+  b.textContent=(up?'▲ +':'▼ ')+Math.abs(s.pct).toFixed(2)+'%';
   document.getElementById('ds-o').textContent=p+s.open.toFixed(2);
-  document.getElementById('ds-c').textContent=p+(s.open-s.chg*.5).toFixed(2);
+  document.getElementById('ds-c').textContent=p+(s.open-s.chg*.4).toFixed(2);
   document.getElementById('ds-h').textContent=p+s.high.toFixed(2);
   document.getElementById('ds-l').textContent=p+s.low.toFixed(2);
   document.getElementById('ds-v').textContent=s.vol;
   document.getElementById('ds-m').textContent=s.cap;
   document.getElementById('ds-pe').textContent=s.pe;
   document.getElementById('ds-52').textContent=p+s.lo52+' – '+p+s.hi52;
-  rng='1D';document.querySelectorAll('.rbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  // You own?
+  const hold=HOLDS.find(h=>h.sym===s.sym);
+  document.getElementById('yo-val').textContent=hold?p+(hold.qty*s.price).toFixed(0):'KES 0.00';
+  document.getElementById('yo-shares').textContent=hold?hold.qty+' Shares':'0 Shares';
+  document.getElementById('yo-num').textContent=': '+(hold?hold.qty:0);
+  // Active tab
+  setDTab('overview', document.querySelector('.dtab'));
   go('s-detail');
-  drawC();
+  rng='1M'; document.querySelectorAll('.rbtn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  drawChart();
 }
-function drawC(){
-  var s=stock,up=s.chg>=0;
-  var nm={'1D':48,'1W':35,'1M':30,'3M':90,'1Y':52};
-  var vm={'1D':.008,'1W':.015,'1M':.025,'3M':.04,'1Y':.07};
-  var n=nm[rng]||30,v=vm[rng]||.02,p2=s.price*(1-v*4),data=[];
-  for(var i=0;i<n;i++){p2=p2*(1+(Math.random()-.47)*v);data.push(parseFloat(p2.toFixed(3)));}
+function setDTab(tab, btn){
+  if(btn){ document.querySelectorAll('.dtab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); }
+  ['overview','orderbook','corpactions'].forEach(t=>{
+    const el=document.getElementById('dtab-'+t); if(el) el.style.display=t===tab?'':'none';
+  });
+}
+function drawChart(){
+  const s=stock, up=s.chg>=0;
+  const nMap={'1M':30,'3M':90,'6M':180}, vMap={'1M':.025,'3M':.04,'6M':.065};
+  const n=nMap[rng]||30, v=vMap[rng]||.025;
+  let p2=s.price*(1-v*3), data=[];
+  for(let i=0;i<n;i++){ p2=p2*(1+(Math.random()-.47)*v); data.push(parseFloat(p2.toFixed(3))); }
   data[data.length-1]=s.price;
-  if(chart)chart.destroy();
-  chart=new Chart(document.getElementById('dchart'),{type:'line',data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:up?'#00843D':'#D0021B',backgroundColor:up?'rgba(0,132,61,.07)':'rgba(208,2,27,.07)',borderWidth:2,fill:true,tension:.35,pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:up?'#00843D':'#D0021B',pointHoverBorderColor:'#fff',pointHoverBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:'#1B3A6B',titleColor:'rgba(0,0,0,0)',titleFont:{size:0},bodyColor:'#fff',bodyFont:{size:14,weight:'600'},padding:10,displayColors:false,cornerRadius:8,callbacks:{label:ctx=>(s.cur==='USD'?'$':'KES ')+ctx.raw.toFixed(2)}}},scales:{x:{display:false},y:{position:'right',grid:{color:'#F0F2F2',drawBorder:false},ticks:{color:'#6B7273',font:{size:11},callback:v=>s.cur==='USD'?'$'+v.toFixed(0):v.toFixed(1)},border:{color:'#F0F2F2'}}}}});
+  if(chart) chart.destroy();
+  chart=new Chart(document.getElementById('dchart'),{
+    type:'line',
+    data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:up?'#00E676':'#FF5252',backgroundColor:up?'rgba(0,230,118,.06)':'rgba(255,82,82,.06)',borderWidth:2,fill:true,tension:.38,pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:up?'#00E676':'#FF5252',pointHoverBorderColor:'#0D1B2A',pointHoverBorderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(21,34,48,.95)',titleColor:'rgba(0,0,0,0)',titleFont:{size:0},bodyColor:'#fff',bodyFont:{size:13,weight:'600'},padding:10,displayColors:false,cornerRadius:10,callbacks:{label:ctx=>(s.cur==='USD'?'$':'KES ')+ctx.raw.toFixed(2)}}},scales:{x:{display:false},y:{position:'right',grid:{color:'rgba(255,255,255,.04)',drawBorder:false},ticks:{color:'rgba(255,255,255,.3)',font:{size:10},callback:v=>s.cur==='USD'?'$'+v.toFixed(0):v.toFixed(1)},border:{color:'transparent'}}}}
+  });
 }
-function setRange(r,btn){rng=r;document.querySelectorAll('.rbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');drawC();}
+function setRange(r,btn){ rng=r; document.querySelectorAll('.rbtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); drawChart(); }
 
-// ORDER
+// ─── ORDER ───────────────────────────────────────────────────────────────────
 function openOrder(type){
-  ot=type;var s=stock,up=s.chg>=0,p=px(s);
+  ot=type; const s=stock, up=s.chg>=0, p=s.cur==='USD'?'$':'KES ';
   document.getElementById('o-title').textContent=(type==='buy'?'Buy ':'Sell ')+s.sym;
   document.getElementById('o-exch').textContent=s.mkt;
   document.getElementById('o-sym').textContent=s.sym;
   document.getElementById('o-name').textContent=s.name;
   document.getElementById('o-price').textContent=p+s.price.toFixed(2);
   document.getElementById('o-bal').textContent=s.cur==='USD'?'$3,750':'KES 482,000';
-  var ce=document.getElementById('o-chg');ce.className='sch '+(up?'up':'dn');ce.textContent=(up?'▲ +':'▼ ')+Math.abs(s.pct).toFixed(2)+'%';
-  document.getElementById('sb').classList.toggle('active',type==='buy');
-  document.getElementById('ss').classList.toggle('active',type==='sell');
-  var cb=document.getElementById('ctab');cb.className='ctabtn'+(type==='sell'?' sell':'');cb.textContent=type==='buy'?'Review Buy Order':'Review Sell Order';
+  const ce=document.getElementById('o-chg'); ce.className='sch-dk '+(up?'up':'dn');
+  ce.textContent=(up?'▲ +':'▼ ')+Math.abs(s.pct).toFixed(2)+'%';
+  document.getElementById('seg-buy').classList.toggle('active',type==='buy');
+  document.getElementById('seg-sell').classList.toggle('active',type==='sell');
+  const cb=document.getElementById('ctab'); cb.className='ctab-dk'+(type==='sell'?' sell':'');
+  cb.textContent=type==='buy'?'Review Buy Order':'Review Sell Order';
   document.getElementById('o-qty').value='100';
   document.getElementById('o-type').value='market';
   document.getElementById('lfg').style.display='none';
-  calcO();go('s-order');
+  calcO(); go('s-order');
 }
 function setOT(t){
   ot=t;
-  document.getElementById('sb').classList.toggle('active',t==='buy');
-  document.getElementById('ss').classList.toggle('active',t==='sell');
-  var cb=document.getElementById('ctab');cb.className='ctabtn'+(t==='sell'?' sell':'');cb.textContent=t==='buy'?'Review Buy Order':'Review Sell Order';
+  document.getElementById('seg-buy').classList.toggle('active',t==='buy');
+  document.getElementById('seg-sell').classList.toggle('active',t==='sell');
+  const cb=document.getElementById('ctab'); cb.className='ctab-dk'+(t==='sell'?' sell':'');
+  cb.textContent=t==='buy'?'Review Buy Order':'Review Sell Order';
   document.getElementById('o-title').textContent=(t==='buy'?'Buy ':'Sell ')+stock.sym;
   calcO();
 }
 function calcO(){
-  var s=stock,otype=document.getElementById('o-type').value;
+  const s=stock, otype=document.getElementById('o-type').value;
   document.getElementById('lfg').style.display=otype!=='market'?'block':'none';
-  var lv=document.getElementById('o-lim').value;
-  var price=(otype!=='market'&&lv)?parseFloat(lv):s.price;
-  var qty=parseInt(document.getElementById('o-qty').value)||0;
-  var br=price*qty*.0012,st=price*qty*.001,tot=price*qty+br+st,p=px(s);
-  document.getElementById('sp').textContent=p+price.toFixed(2);
-  document.getElementById('sq').textContent=qty.toLocaleString()+' shares';
-  document.getElementById('sb2').textContent=p+br.toFixed(2);
-  document.getElementById('sst').textContent=p+st.toFixed(2);
-  document.getElementById('stot').textContent=p+tot.toFixed(2);
+  const lv=document.getElementById('o-lim').value;
+  const px=(otype!=='market'&&lv)?parseFloat(lv):s.price;
+  const qty=parseInt(document.getElementById('o-qty').value)||0;
+  const cost=px*qty, brok=cost*.0012, cma=cost*.0002, nse=cost*.0002, stamp=cost*.006, total=cost+brok+cma+nse+stamp;
+  const p=s.cur==='USD'?'$':'KES ';
+  document.getElementById('sp').textContent=p+cost.toFixed(2);
+  document.getElementById('s-charges').textContent=p+(brok+cma+nse+stamp).toFixed(2)+' ▲';
+  document.getElementById('c-brok').textContent=p+brok.toFixed(3);
+  document.getElementById('c-cma').textContent=p+cma.toFixed(3);
+  document.getElementById('c-nse').textContent=p+nse.toFixed(3);
+  document.getElementById('c-stamp').textContent=p+stamp.toFixed(2);
+  document.getElementById('s-total').textContent=p+total.toFixed(2);
 }
 
-// SHEET
+// ─── SHEET ───────────────────────────────────────────────────────────────────
 function openSheet(){
-  var s=stock,qty=parseInt(document.getElementById('o-qty').value)||0;
-  var tot=(s.price*qty*1.0022).toFixed(2),p=px(s),buy=ot==='buy';
-  document.getElementById('shbody').innerHTML=
-    '<div class="shtit">'+(buy?'Confirm Buy':'Confirm Sell')+'</div>'
-    +'<div class="shsub"><div class="scmini"><div class="scmb" style="width:16px;height:2px;background:#00848F;"></div><div class="scmb" style="width:13px;height:2px;background:#00843D;"></div><div class="scmb" style="width:10px;height:2px;background:#1B3A6B;"></div></div> Standard Chartered · '+s.mkt+'</div>'
-    +'<div class="shrow"><span class="srlbl">Stock</span><span class="srval">'+s.sym+' · '+s.name+'</span></div>'
-    +'<div class="shrow"><span class="srlbl">Action</span><span class="srval" style="color:'+(buy?'#00843D':'#D0021B')+';font-size:16px;">'+(buy?'BUY':'SELL')+'</span></div>'
-    +'<div class="shrow"><span class="srlbl">Quantity</span><span class="srval">'+qty+' shares</span></div>'
-    +'<div class="shrow"><span class="srlbl">Est. Price</span><span class="srval">'+p+s.price.toFixed(2)+'</span></div>'
-    +'<div class="shrow"><span class="srlbl">Total Amount</span><span class="srval" style="color:var(--teal);font-size:16px;">'+p+tot+'</span></div>'
-    +'<div class="shrow"><span class="srlbl">Debit from</span><span class="srval">SC Current Account ••• 4821</span></div>'
-    +'<div class="shrow"><span class="srlbl">Execution via</span><span class="srval">Vault22 · '+s.mkt+'</span></div>'
-    +'<div class="shbtns"><button class="shcancel" onclick="closeSheet()">Cancel</button>'
-    +'<button class="shconfirm'+(buy?'':' sell')+'" onclick="confirmO()">Confirm '+(buy?'Buy':'Sell')+'</button></div>';
+  const s=stock, qty=parseInt(document.getElementById('o-qty').value)||0;
+  const px=s.price, cost=px*qty, total=(cost*1.0022).toFixed(2), p=s.cur==='USD'?'$':'KES ', buy=ot==='buy';
+  const sc=`<div class="sc-mini-bars"><div class="sc-mb" style="width:16px;height:2px;background:#00848F;"></div><div class="sc-mb" style="width:13px;height:2px;background:#00843D;"></div><div class="sc-mb" style="width:10px;height:2px;background:#1B3A6B;"></div></div>`;
+  document.getElementById('sh-body').innerHTML=`
+    <div class="sh-title">${buy?'Confirm Buy':'Confirm Sell'}</div>
+    <div class="sh-sub">${sc} Standard Chartered · ${s.mkt}</div>
+    <div class="sh-row"><span class="shlbl">Stock</span><span class="shval">${s.sym} · ${s.name}</span></div>
+    <div class="sh-row"><span class="shlbl">Action</span><span class="shval" style="color:${buy?'#00E676':'#FF5252'};font-size:16px;">${buy?'BUY':'SELL'}</span></div>
+    <div class="sh-row"><span class="shlbl">Quantity</span><span class="shval">${qty} shares</span></div>
+    <div class="sh-row"><span class="shlbl">Est. Price</span><span class="shval">${p}${px.toFixed(2)}</span></div>
+    <div class="sh-row"><span class="shlbl">Total Amount</span><span class="shval" style="color:var(--teal);font-size:16px;">${p}${total}</span></div>
+    <div class="sh-row"><span class="shlbl">Debit from</span><span class="shval">SC Current Account ••• 4821</span></div>
+    <div class="sh-row"><span class="shlbl">Execution via</span><span class="shval">Vault22 · ${s.mkt}</span></div>
+    <div class="sh-btns">
+      <button class="sh-cancel" onclick="closeSheet()">Cancel</button>
+      <button class="sh-confirm${buy?'':' sell'}" onclick="confirmOrder()">Confirm ${buy?'Buy':'Sell'}</button>
+    </div>`;
   document.getElementById('ovl').classList.add('show');
 }
-function closeSheet(){document.getElementById('ovl').classList.remove('show');}
-function confirmO(){
-  var s=stock,qty=document.getElementById('o-qty').value;
-  var tot=(s.price*parseInt(qty)*1.0022).toFixed(2),p=px(s),buy=ot==='buy';
-  document.getElementById('shbody').innerHTML=
-    '<div style="text-align:center;padding:8px 0 0">'
-    +'<div class="sucring">✓</div>'
-    +'<div class="such">Order Placed!</div>'
-    +'<div class="sucp">Your '+(buy?'buy':'sell')+' order for <strong>'+qty+' '+s.sym+'</strong> shares has been submitted.<br><strong>'+p+tot+'</strong> will be '+(buy?'debited from':'credited to')+' your SC Current Account ••• 4821.</div>'
-    +'<div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--txtgrey);margin-bottom:20px;"><div class="scmini"><div class="scmb" style="width:14px;height:2px;background:#00848F;"></div><div class="scmb" style="width:11px;height:2px;background:#00843D;"></div><div class="scmb" style="width:8px;height:2px;background:#1B3A6B;"></div></div> Standard Chartered Kenya · Vault22</div>'
-    +'<button class="sucdone" onclick="closeSheet();go(\'s-home\',0)">Back to Home</button>'
-    +'</div>';
+function closeSheet(){ document.getElementById('ovl').classList.remove('show'); }
+function confirmOrder(){
+  const s=stock, qty=document.getElementById('o-qty').value;
+  const total=(s.price*parseInt(qty)*1.0022).toFixed(2), p=s.cur==='USD'?'$':'KES ', buy=ot==='buy';
+  document.getElementById('sh-body').innerHTML=`
+    <div style="text-align:center;padding:8px 0 0;">
+      <div class="suc-ring">✓</div>
+      <div class="suc-h">Order Placed!</div>
+      <div class="suc-p">Your ${buy?'buy':'sell'} order for <strong style="color:#fff;">${qty} ${s.sym}</strong> shares has been submitted.<br><strong style="color:var(--teal);">${p}${total}</strong> will be ${buy?'debited from':'credited to'} SC Current Account ••• 4821.<br><br><span style="font-size:11px;color:rgba(255,255,255,.3);">Ref: UB${Math.random().toString(36).substring(2,10).toUpperCase()}</span></div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:20px;"><div class="sc-mini-bars"><div class="sc-mb" style="width:14px;height:2px;background:#00848F;"></div><div class="sc-mb" style="width:11px;height:2px;background:#00843D;"></div><div class="sc-mb" style="width:8px;height:2px;background:#1B3A6B;"></div></div> Standard Chartered Kenya · Vault22</div>
+      <button class="suc-done" onclick="closeSheet();go('s-trade',0)">Done</button>
+    </div>`;
 }
 
-// PORTFOLIO
-function renderP(){
-  document.getElementById('plist').innerHTML=HLD.map(h=>{
-    var s=ST.find(x=>x.sym===h.sym);if(!s)return'';
-    var ic2=ic(s.sym),val=s.price*h.qty,pl=(s.price-h.avg)*h.qty,pct=((s.price-h.avg)/h.avg*100).toFixed(1),up=pl>=0,p=px(s);
-    return '<div class="hrow" onclick="openD(\''+s.sym+'\')">'
-      +'<div class="hico" style="background:'+ic2.bg+';color:'+ic2.c+'">'+s.sym.slice(0,2)+'</div>'
-      +'<div class="hinf"><div class="hsym">'+s.sym+'</div><div class="hdet">'+h.qty+' shares · avg '+p+h.avg.toFixed(2)+' · '+s.mkt+'</div></div>'
-      +'<div class="hrgt"><div class="hval">'+p+val.toFixed(0)+'</div><div class="hpl '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+pct+'% ('+(up?'+':'')+p+pl.toFixed(0)+')</div></div>'
-      +'</div>';
+// ─── PORTFOLIO ───────────────────────────────────────────────────────────────
+function renderPort(){
+  document.getElementById('port-list').innerHTML=HOLDS.map(h=>{
+    const s=ST.find(x=>x.sym===h.sym); if(!s) return'';
+    const up=(s.price-h.avg)>=0, val=s.price*h.qty, pl=(s.price-h.avg)*h.qty, pct=((s.price-h.avg)/h.avg*100).toFixed(1), p=s.cur==='USD'?'$':'KES ', c=ic(s.sym);
+    return `<div class="hold-row" onclick="openDetail('${s.sym}')">
+      <div class="hico" style="background:${c.bg};color:${c.c}">${s.sym.slice(0,2)}</div>
+      <div class="hinf"><div class="hsym">${s.sym}</div><div class="hdet">${h.qty} shares · avg ${p}${h.avg.toFixed(2)} · ${s.mkt}</div></div>
+      <div class="hrgt"><div class="hval">${p}${val.toFixed(0)}</div><div class="hpl ${up?'up':'dn'}">${up?'▲ +':'▼ '}${pct}% (${up?'+':''}${p}${pl.toFixed(0)})</div></div>
+    </div>`;
   }).join('');
 }
 
-// DISCOVER
-function renderD(f){
-  var list=f==='ALL'?ST:ST.filter(s=>s.mkt===f);
-  document.getElementById('dlist').innerHTML=list.map(srow).join('');
-}
-function dfilt(f,btn){document.querySelectorAll('#df .fpill').forEach(p=>p.classList.remove('active'));btn.classList.add('active');renderD(f);}
-function srch(q){
-  var qq=q.toLowerCase();
-  var list=qq?ST.filter(s=>s.sym.toLowerCase().includes(qq)||s.name.toLowerCase().includes(qq)):ST;
-  document.getElementById('dlist').innerHTML=list.map(srow).join('');
-}
-function renderMvrs(){
-  var sorted=[...ST].sort((a,b)=>Math.abs(b.pct)-Math.abs(a.pct)).slice(0,5);
-  document.getElementById('mvrs').innerHTML=sorted.map(s=>{
-    var up=s.chg>=0,p=px(s);
-    return '<div class="mvcard" onclick="openD(\''+s.sym+'\')">'
-      +'<div class="mvsym">'+s.sym+'</div><div class="mvprice">'+p+s.price.toFixed(2)+'</div>'
-      +'<div class="mvchg '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+Math.abs(s.pct).toFixed(2)+'%</div>'
-      +'</div>';
-  }).join('');
+// ─── DONUT CHART ─────────────────────────────────────────────────────────────
+let donutChart=null;
+function drawDonut(){
+  if(donutChart) donutChart.destroy();
+  donutChart=new Chart(document.getElementById('donutChart'),{
+    type:'doughnut',
+    data:{labels:['EQTY','SCOM','AAPL','Other'],datasets:[{data:[38.5,29.2,20.8,11.5],backgroundColor:['#FFC107','#00E676','#40C4FF','#FF5252'],borderColor:['#0D2A50'],borderWidth:3,hoverBorderWidth:4}]},
+    options:{responsive:false,cutout:'72%',plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(21,34,48,.95)',bodyColor:'#fff',bodyFont:{size:12,weight:'600'},padding:8,cornerRadius:8}}}
+  });
 }
 
-// INIT
-renderHL();renderHH();renderP();renderD('ALL');renderMvrs();
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildTicker();
+buildMovers();
+renderSL();
+renderPort();
+document.getElementById('bnav').style.display='none';
 </script>
 </body>
 </html>
