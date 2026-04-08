@@ -774,22 +774,30 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
               <div>
                 <div class="ob-col-hd" style="color:var(--sc-green);">Bids</div>
                 <div style="font-size:10px;color:var(--midgrey);display:flex;justify-content:space-between;padding:0 8px;margin-bottom:5px;"><span>Price</span><span>Qty</span></div>
-                ${[['42.30','1,200'],['42.10','800'],['41.90','2,400'],['41.75','500'],['41.50','3,100']].map(r=>`<div class="ob-row bid"><span class="ob-price-bid">${r[0]}</span><span class="ob-qty">${r[1]}</span></div>`).join('')}
+                <div class="ob-row bid"><span class="ob-price-bid">42.30</span><span class="ob-qty">1,200</span></div>
+                <div class="ob-row bid"><span class="ob-price-bid">42.10</span><span class="ob-qty">800</span></div>
+                <div class="ob-row bid"><span class="ob-price-bid">41.90</span><span class="ob-qty">2,400</span></div>
+                <div class="ob-row bid"><span class="ob-price-bid">41.75</span><span class="ob-qty">500</span></div>
+                <div class="ob-row bid"><span class="ob-price-bid">41.50</span><span class="ob-qty">3,100</span></div>
               </div>
               <div>
                 <div class="ob-col-hd" style="color:var(--red);">Asks</div>
                 <div style="font-size:10px;color:var(--midgrey);display:flex;justify-content:space-between;padding:0 8px;margin-bottom:5px;"><span>Price</span><span>Qty</span></div>
-                ${[['42.50','900'],['42.70','600'],['42.90','1,800'],['43.10','450'],['43.30','2,200']].map(r=>`<div class="ob-row ask"><span class="ob-price-ask">${r[0]}</span><span class="ob-qty">${r[1]}</span></div>`).join('')}
+                <div class="ob-row ask"><span class="ob-price-ask">42.50</span><span class="ob-qty">900</span></div>
+                <div class="ob-row ask"><span class="ob-price-ask">42.70</span><span class="ob-qty">600</span></div>
+                <div class="ob-row ask"><span class="ob-price-ask">42.90</span><span class="ob-qty">1,800</span></div>
+                <div class="ob-row ask"><span class="ob-price-ask">43.10</span><span class="ob-qty">450</span></div>
+                <div class="ob-row ask"><span class="ob-price-ask">43.30</span><span class="ob-qty">2,200</span></div>
               </div>
             </div>
           </div>
         </div>
         <!-- Corp Actions -->
         <div id="tab-corpactions" style="display:none;">
-          <div class="ca-wrap">
-            ${[{t:'Dividend',d:'Ex-Date: 15 Mar 2025 · KES 2.50/share',c:'var(--sc-green)',cv:'KES 2.50'},{t:'AGM Notice',d:'Meeting: 28 Mar 2025 · Annual General Meeting',c:'var(--amber)',cv:'28 Mar'},{t:'Bonus Issue',d:'Record Date: 10 Apr 2025 · 1:5 ratio',c:'var(--sc-teal)',cv:'1:5'}].map(e=>`<div class="ca-item"><div class="ca-dot" style="background:${e.c};"></div><div class="ca-info"><div class="ca-t">${e.t}</div><div class="ca-d">${e.d}</div></div><div class="ca-val" style="color:${e.c};">${e.cv}</div></div>`).join('')}
+          <div class="ca-wrap" id="ca-wrap-content">
           </div>
         </div>
+
         <div style="height:8px;"></div>
         <div class="you-own">
           <div class="yo-info"><div class="yo-lbl">You Own</div><div class="yo-val" id="yo-val">KES 0.00</div></div>
@@ -960,26 +968,7 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
         </div>
         <!-- Trade History (hidden by default) -->
         <div id="ord-history" style="display:none;">
-          <div style="background:#fff;margin:12px 16px;border-radius:12px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow-sm);">
-            ${[
-              {sym:'EQTY',action:'BUY',qty:500,price:38.50,total:19250,date:'01 Feb, 10:15',status:'Filled'},
-              {sym:'SCOM',action:'BUY',qty:1000,price:20.10,total:20100,date:'28 Jan, 11:42',status:'Filled'},
-              {sym:'KCB', action:'BUY',qty:200,price:34.00,total:6800,date:'20 Jan, 09:31',status:'Filled'},
-              {sym:'AAPL',action:'BUY',qty:10,price:175.00,total:1750,date:'15 Jan, 16:02',status:'Filled',usd:true},
-              {sym:'EQTY',action:'SELL',qty:100,price:41.20,total:4120,date:'10 Jan, 14:55',status:'Filled'},
-            ].map((t,i) => `
-            <div style="padding:13px 16px;${i>0?'border-top:1px solid var(--ltgrey)':''}display:flex;align-items:center;justify-content:space-between;">
-              <div>
-                <div style="display:flex;align-items:center;gap:7px;">
-                  <span style="font-size:14px;font-weight:700;color:var(--black);">${t.sym}${t.usd?'<span style="background:var(--sc-cobalt);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;">US</span>':''}</span>
-                  <span style="background:${t.action==='BUY'?'var(--sc-green-lt)':'var(--red-lt)'};color:${t.action==='BUY'?'var(--sc-green)':'var(--red)'};font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;">${t.action}</span>
-                  <span style="background:var(--ltgrey);color:var(--txtgrey);font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;">${t.status}</span>
-                </div>
-                <div style="font-size:11px;color:var(--txtgrey);margin-top:2px;">${t.date} · ${t.qty} shares · ${t.usd?'$':'KES '}${t.price.toFixed(2)}/share</div>
-              </div>
-              <div style="font-size:14px;font-weight:700;color:var(--black);">${t.usd?'$':'KES '}${t.total.toLocaleString()}</div>
-            </div>`).join('')}
-          </div>
+          <div id="trade-history-list" style="background:#fff;margin:12px 16px;border-radius:12px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow-sm);"></div>
         </div>
         <div class="pb"></div>
       </div>
@@ -1329,10 +1318,50 @@ function renderPort(){
   }).join('');
 }
 
-// ─── INIT ──────────────────────────────────────────────────────────────────
+// ─── TRADE HISTORY ─────────────────────────────────────────────────────────
+function renderTradeHistory(){
+  const trades=[
+    {sym:'EQTY',action:'BUY',qty:500,price:38.50,total:19250,date:'01 Feb, 10:15',status:'Filled'},
+    {sym:'SCOM',action:'BUY',qty:1000,price:20.10,total:20100,date:'28 Jan, 11:42',status:'Filled'},
+    {sym:'KCB', action:'BUY',qty:200,price:34.00,total:6800,date:'20 Jan, 09:31',status:'Filled'},
+    {sym:'AAPL',action:'BUY',qty:10,price:175.00,total:1750,date:'15 Jan, 16:02',status:'Filled',usd:true},
+    {sym:'EQTY',action:'SELL',qty:100,price:41.20,total:4120,date:'10 Jan, 14:55',status:'Filled'},
+  ];
+  document.getElementById('trade-history-list').innerHTML=trades.map((t,i)=>`
+    <div style="padding:13px 16px;${i>0?'border-top:1px solid var(--ltgrey);':''}display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="display:flex;align-items:center;gap:7px;">
+          <span style="font-size:14px;font-weight:700;color:var(--black);">${t.sym}${t.usd?'<span style="background:var(--sc-cobalt);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;">US</span>':''}</span>
+          <span style="background:${t.action==='BUY'?'var(--sc-green-lt)':'var(--red-lt)'};color:${t.action==='BUY'?'var(--sc-green)':'var(--red)'};font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;">${t.action}</span>
+          <span style="background:var(--ltgrey);color:var(--txtgrey);font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;">${t.status}</span>
+        </div>
+        <div style="font-size:11px;color:var(--txtgrey);margin-top:2px;">${t.date} · ${t.qty} shares · ${t.usd?'$':'KES '}${t.price.toFixed(2)}/share</div>
+      </div>
+      <div style="font-size:14px;font-weight:700;color:var(--black);">${t.usd?'$':'KES '}${t.total.toLocaleString()}</div>
+    </div>`).join('');
+}
+
+// ─── CORP ACTIONS ───────────────────────────────────────────────────────────
+function renderCorpActions(){
+  const events=[
+    {t:'Dividend',   d:'Ex-Date: 15 Mar 2025 · KES 2.50/share',            c:'var(--sc-green)', cv:'KES 2.50'},
+    {t:'AGM Notice', d:'Meeting: 28 Mar 2025 · Annual General Meeting',     c:'var(--amber)',    cv:'28 Mar'},
+    {t:'Bonus Issue',d:'Record Date: 10 Apr 2025 · 1:5 ratio',              c:'var(--sc-teal)',  cv:'1:5'},
+  ];
+  document.getElementById('ca-wrap-content').innerHTML=events.map(e=>`
+    <div class="ca-item">
+      <div class="ca-dot" style="background:${e.c};"></div>
+      <div class="ca-info"><div class="ca-t">${e.t}</div><div class="ca-d">${e.d}</div></div>
+      <div class="ca-val" style="color:${e.c};">${e.cv}</div>
+    </div>`).join('');
+}
+
+
 buildTicker();
 buildMovers('NSE');
 renderSL(ST.filter(s=>s.mkt==='NSE'));
+renderTradeHistory();
+renderCorpActions();
 document.getElementById('bnav').style.display='none';
 </script>
 </body>
