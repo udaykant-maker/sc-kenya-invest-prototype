@@ -1013,22 +1013,36 @@ html,body{font-family:'Source Sans 3',sans-serif;background:#DCDCDC;min-height:1
           </div>
         </div>
         <!-- Menu items -->
-        ${[
-          {ico:'💼', label:'Investment Profile', sub:'Risk level · preferences'},
-          {ico:'🔔', label:'Alerts & Notifications', sub:'Price alerts · order updates'},
-          {ico:'📄', label:'Statements & Reports', sub:'Download trade history'},
-          {ico:'🛡️', label:'Security Settings', sub:'PIN · biometric · 2FA'},
-          {ico:'❓', label:'Help & Support', sub:'FAQs · contact SC Kenya'},
-          {ico:'📋', label:'Terms & Conditions', sub:'Legal · CMA disclosures'},
-        ].map(m => `
         <div style="display:flex;align-items:center;gap:14px;background:#fff;padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;">
-          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">${m.ico}</div>
-          <div style="flex:1;">
-            <div style="font-size:15px;font-weight:600;color:var(--black);">${m.label}</div>
-            <div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">${m.sub}</div>
-          </div>
+          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">💼</div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:var(--black);">Investment Profile</div><div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">Risk level · preferences</div></div>
           <span style="color:var(--midgrey);font-size:20px;">›</span>
-        </div>`).join('')}
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;background:#fff;padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;">
+          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔔</div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:var(--black);">Alerts &amp; Notifications</div><div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">Price alerts · order updates</div></div>
+          <span style="color:var(--midgrey);font-size:20px;">›</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;background:#fff;padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;">
+          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📄</div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:var(--black);">Statements &amp; Reports</div><div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">Download trade history</div></div>
+          <span style="color:var(--midgrey);font-size:20px;">›</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;background:#fff;padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;">
+          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🛡️</div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:var(--black);">Security Settings</div><div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">PIN · biometric · 2FA</div></div>
+          <span style="color:var(--midgrey);font-size:20px;">›</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;background:#fff;padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;">
+          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">❓</div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:var(--black);">Help &amp; Support</div><div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">FAQs · contact SC Kenya</div></div>
+          <span style="color:var(--midgrey);font-size:20px;">›</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;background:#fff;padding:14px 20px;border-bottom:1px solid var(--ltgrey);cursor:pointer;">
+          <div style="width:40px;height:40px;border-radius:11px;background:var(--sc-teal-lt);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📋</div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:var(--black);">Terms &amp; Conditions</div><div style="font-size:12px;color:var(--txtgrey);margin-top:1px;">Legal · CMA disclosures</div></div>
+          <span style="color:var(--midgrey);font-size:20px;">›</span>
+        </div>
         <!-- Powered by -->
         <div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:20px;font-size:11px;color:var(--midgrey);">
           <span style="background:var(--sc-teal);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;">V22</span>
